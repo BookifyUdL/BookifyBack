@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const GenreSchema = mongoose.Schema({
+const AuthorSchema = mongoose.Schema({
   _id: mongoose.Schema.Types.ObjectId,
   name: {
     type: String,
@@ -13,6 +13,6 @@ const GenreSchema = mongoose.Schema({
   }
 });
 
-var GenreModel = mongoose.model('Genre', GenreSchema);
+var AuthorModel = mongoose.model('Author', AuthorSchema);
 
-module.exports = GenreModel;
+module.exports = AuthorModel;
