@@ -8,7 +8,7 @@ const GenreSchema = mongoose.Schema({
     unique: true
   },
   books: {
-    type: [Books],
+    type: [Book],
     required: true
   }
 });
