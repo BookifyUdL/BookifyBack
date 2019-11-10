@@ -20,8 +20,9 @@ const BookSchema = mongoose.Schema({
     required: true
   },
   genre: {
-      type: [Genre],
-      required: true
+    type: [mongoose.Schema.Types.ObjectId], 
+    ref: 'Genre',
+    required: true
   },
   cover_image: {
     type: String,
