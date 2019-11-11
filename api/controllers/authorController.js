@@ -77,7 +77,7 @@ exports.get_author = (req, res, next) => {
                 }
             });
         } else {
-            res.status(404).json({message: "No result found, by the id you search"})
+            res.status(404).json({message: "No result found, for the id you've searched"})
         }
     }) 
     .catch(err => {

@@ -20,7 +20,7 @@ exports.create_book = (req, res, next) => {
     .then(result => {
         console.log(result);
         res.status(201).json({
-            message: "Created product successfully",
+            message: "Created book successfully",
             createdProduct: {
                 _id: result._id,
                 title: result.title,
@@ -105,7 +105,7 @@ exports.get_book_by_title = (req, res, next) => {
                 }
             });
         } else {
-            res.status(404).json({message: "No result found, by the id you search"})
+            res.status(404).json({message: "No result found, for the id you've searched"})
         }
     }) 
     .catch(err => {
@@ -134,7 +134,7 @@ exports.get_book_by_genre = (req, res, next) => {
                 }
             });
         } else {
-            res.status(404).json({message: "No result found, by the id you search"})
+            res.status(404).json({message: "No result found, for the id you've searched"})
         }
     }) 
     .catch(err => {

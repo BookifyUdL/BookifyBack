@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
+const Comment = require('../models/comment.js');
+
 
 exports.create_comment = (req, res, next) => {}
 exports.get_all_comment = (req, res, next) => {}

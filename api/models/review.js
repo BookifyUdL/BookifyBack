@@ -9,10 +9,15 @@ const ReviewSchema = mongoose.Schema({
   sentiment: {
     type: String,
     required: true
+  },
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    //required:true
   }
 
 });
 
-var ReviewModel = mongoose.model('Achievement', ReviewSchema);
+var ReviewModel = mongoose.model('Review', ReviewSchema);
 
 module.exports = ReviewModel;
