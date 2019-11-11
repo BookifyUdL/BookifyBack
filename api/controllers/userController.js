@@ -2,6 +2,8 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
+/*TODO modify this controller (_maybe)*/
+
 exports.user_signup = (req, res, next) => {
     User.find({email: req.body.email})
         .exec()

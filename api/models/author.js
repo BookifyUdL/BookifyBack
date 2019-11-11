@@ -6,11 +6,8 @@ const AuthorSchema = mongoose.Schema({
     type: String,
     required: true,
     unique: true
-  },
-  books: {
-    type: [Books],
-    required: true
   }
+
 });
 
 var AuthorModel = mongoose.model('Author', AuthorSchema);

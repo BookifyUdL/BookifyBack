@@ -85,7 +85,6 @@ exports.get_all_books = (req, res, next) => {
             error: err    
         });
     });
-
 }
 exports.get_book_by_title = (req, res, next) => {
     const title = req.params.bookTitle;//params--> object with all the params we have.
