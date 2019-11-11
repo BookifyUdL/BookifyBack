@@ -11,6 +11,10 @@ const BookSchema = mongoose.Schema({
     type: String,
     required: true
   },
+  publisher: {
+    type:String,
+    required: true
+  },
   num_pages: {
       type: Number,
       required: true

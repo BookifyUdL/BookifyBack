@@ -6,10 +6,6 @@ const GenreSchema = mongoose.Schema({
     type: String,
     required: true,
     unique: true
-  },
-  books: {
-    type: [Book],
-    required: true
   }
 });
 

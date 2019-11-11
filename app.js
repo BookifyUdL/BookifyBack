@@ -4,6 +4,15 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
 
+const userRoutes = require('./api/routes/userRoutes');
+const bookRoutes = require('./api/routes/bookRoutes');
+const authorRoutes = require('./api/routes/authorRoutes');
+const commentRoutes = require('./api/routes/commentRoutes');
+const reviewRoutes = require('./api/routes/reviewRoutes');
+const genreRoutes = require('./api/routes/genreRoutes');
+const achievementRoutes = require('./api/routes/achievementRoutes');
+
+
 
 //MongoDB connection PATH
 mongoose
@@ -40,6 +49,13 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use('/user', userRoutes);
+app.use('/book', bookRoutes);
+app.use('/author', authorRoutes);
+app.use('/genre', genreRoutes);
+app.use('/achievements', achievementRoutes);
+app.use('/comment', commentRoutes);
+app.use('/review', reviewRoutes);
 
 //Handle all requests errors here, because if I arrive here
 // it means that any request has matched with the other file ones.
