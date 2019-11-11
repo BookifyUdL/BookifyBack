@@ -1,7 +1,0 @@
-books: crud X --> falta logica dels controllers
-achievements: crud
-review: crud X --> falta logica dels controllers
-comment: crud X --> falta logica dels controllers
-author: crud X --> falta logica dels controllers
-users: crud books: crud X --> falta logica dels controllers
-generes: crud  X --> falta logica dels controllers
