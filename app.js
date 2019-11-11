@@ -49,13 +49,13 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use('/user', userRoutes);
-app.use('/book', bookRoutes);
-app.use('/author', authorRoutes);
-app.use('/genre', genreRoutes);
+app.use('/users', userRoutes);
+app.use('/books', bookRoutes);
+app.use('/authors', authorRoutes);
+app.use('/genres', genreRoutes);
 app.use('/achievements', achievementRoutes);
-app.use('/comment', commentRoutes);
-app.use('/review', reviewRoutes);
+app.use('/comments', commentRoutes);
+app.use('/reviews', reviewRoutes);
 
 //Handle all requests errors here, because if I arrive here
 // it means that any request has matched with the other file ones.
