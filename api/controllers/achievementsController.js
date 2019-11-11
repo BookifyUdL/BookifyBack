@@ -11,8 +11,8 @@ exports.create_achievement = (req, res, next) => {
     .then(result => {
         console.log(result);
         res.status(201).json({
-            message: "Created achievement successfully",
-            createdProduct: {
+            message: "Achievement created successfully",
+            createdAchievement: {
                 _id: result._id,
                 name: result.name,
                 request: {
@@ -20,7 +20,7 @@ exports.create_achievement = (req, res, next) => {
                     url: 'http://localhost:3000/achievements/' + result._id
                 }
 
-            }//To confirm we got the correct product.
+            }
         });
 
     })

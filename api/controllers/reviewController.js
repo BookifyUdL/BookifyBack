@@ -22,7 +22,7 @@ exports.create_review = (req, res, next) => {
                     url: 'http://localhost:3000/reviews/' + result._id
                 }
 
-            }//To confirm we got the correct product.
+            }
         });
     })
     .catch(err => console.log(err));

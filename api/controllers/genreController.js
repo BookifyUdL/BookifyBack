@@ -12,7 +12,7 @@ exports.create_genre = (req, res, next) => {
     .then(result => {
         console.log(result);
         res.status(201).json({
-            message: "Created genre successfully",
+            message: "Genre created successfully",
             createdGenre: {
                 _id: result._id,
                 name: result.name,
@@ -21,7 +21,7 @@ exports.create_genre = (req, res, next) => {
                     url: 'http://localhost:3000/genres/' + result._id
                 }
 
-            }//To confirm we got the correct product.
+            }
         });
     })
     .catch(err => console.log(err));

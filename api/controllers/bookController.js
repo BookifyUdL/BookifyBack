@@ -20,8 +20,8 @@ exports.create_book = (req, res, next) => {
     .then(result => {
         console.log(result);
         res.status(201).json({
-            message: "Created book successfully",
-            createdProduct: {
+            message: "Book created successfully",
+            createdBook: {
                 _id: result._id,
                 title: result.title,
                 summary: result.summary,
@@ -37,7 +37,7 @@ exports.create_book = (req, res, next) => {
                     url: 'http://localhost:3000/books/' + result._id
                 }
 
-            }//To confirm we got the correct product.
+            }
         });
 
     })

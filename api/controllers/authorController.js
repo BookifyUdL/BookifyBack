@@ -12,8 +12,8 @@ exports.create_author = (req, res, next) => {
     .then(result => {
         console.log(result);
         res.status(201).json({
-            message: "Created author successfully",
-            createdProduct: {
+            message: "Author created successfully",
+            createdAuthor: {
                 _id: result._id,
                 name: result.name,
                 request: {
@@ -21,7 +21,7 @@ exports.create_author = (req, res, next) => {
                     url: 'http://localhost:3000/authors/' + result._id
                 }
 
-            }//To confirm we got the correct product.
+            }
         });
 
     })
