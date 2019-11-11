@@ -7,9 +7,9 @@ const morgan = require('morgan');
 
 //MongoDB connection PATH
 mongoose
-    .connect("mongodb+srv://test:" +
+    .connect("mongodb+srv://user:" +
         process.env.MONGODB_ATLAS_PW + 
-        "@test-nodejs-api-pvbee.mongodb.net/test?retryWrites=true&w=majority",
+        "@bookify-db-pvbee.mongodb.net/test?retryWrites=true&w=majority",
         {
             useNewUrlParser: true,
             useUnifiedTopology: true
