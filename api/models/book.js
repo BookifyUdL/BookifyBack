@@ -36,6 +36,10 @@ const BookSchema = mongoose.Schema({
   cover_image: {
     type: String,
     required: true
+  },
+  comments:{
+    type: [mongoose.Schema.Types.ObjectId],
+    ref: 'Comment'
   }
 });
 

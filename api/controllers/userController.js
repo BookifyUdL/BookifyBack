@@ -16,16 +16,25 @@ exports.user_signup = (req, res, next) => {
                 });
             } else {
                 //Encrypts the password. Adding string at the start and the end of the plain text and then hashes it.
-                bcrypt.hash(req.body.password, 10, (err, hash) => {
+/*                bcrypt.hash(req.body.password, 10, (err, hash) => {
                     if (err) {
                         return res.status(500).json({
                             error: err
                         });
-                    } else {
+                    } else {*/
                         const user = new User({
                             _id: new mongoose.Types.ObjectId(),
+                            firebaseId: req.body.firebaseId,
+                            name: req.body.name,
+                            userPicture: req.body.userPicture,
+                            premium: req.body.premium,
+                            achievements: req.body.achievements,
+                            library: req.body.library,
+                            read_book: req.body.read,
+                            interested_book: req.body.interested_book,
+                            genres: req.body.genres,
                             email: req.body.email,
-                            password: hash
+                            //password: hash
                         });
                         user.save()
                         .then( result => {
@@ -43,8 +52,8 @@ exports.user_signup = (req, res, next) => {
                     }
                 });
             }
-        });    
-}
+        /*});    
+}*/
 
 exports.user_login = (req,res,next) => {
     User.find({email: req.body.email})
@@ -55,7 +64,29 @@ exports.user_login = (req,res,next) => {
                 message: "Auth failed"
             });
         }
-        bcrypt.compare(req.body.password, user[0].password, (err, result) => {
+
+        if(req.body.firebaseId === user[0].firebaseId){
+            const token = jwt.sign(
+                {
+                    email: user[0].email,
+                    userId: user[0]._id,
+                },
+                process.env.JWT_KEY, 
+                {
+                    expiresIn: "1h"
+                }
+                );
+                
+                return res.status(200).json({
+                    message:"Auth successful",
+                    token: token
+                });
+        } else {
+            return res.status(401).json({
+                message: "Auth failed"
+            });
+        }
+        /*bcrypt.compare(req.body.password, user[0].password, (err, result) => {
             if(err){
                 return res.status(401).json({
                     message: "Auth failed"
@@ -80,7 +111,7 @@ exports.user_login = (req,res,next) => {
             res.status(401).json({
                 message: "Auth failed"
             });
-        })
+        })*/
     })
     .catch(err => {
         console.log(err);
