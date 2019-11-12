@@ -6,7 +6,8 @@ exports.create_genre = (req, res, next) => {
     console.log(req.file);
     const genre = new Genre({
         _id: mongoose.Types.ObjectId(),
-        name: req.body.name
+        name: req.body.name,
+        picture: req.body.picture
     });
     genre.save()
     .then(result => {
@@ -16,6 +17,7 @@ exports.create_genre = (req, res, next) => {
             createdGenre: {
                 _id: result._id,
                 name: result.name,
+                picture: result.picture,
                 request: {
                     type: 'GET',
                     url: 'http://localhost:3000/genres/' + result._id
@@ -39,6 +41,7 @@ exports.get_all_genres = (req, res, next) => {
                     return {
                         _id: result._id,
                         name: result.name,
+                        picture: result.picture,
                         //extra information, about how to do a get.
                         request: {
                             type: 'GET',
@@ -120,7 +123,7 @@ exports.delete_genre = (req, res, next) => {
             request:{
                 type: "POST",
                 url: "http://localhost:3000/genres/",
-                body: {name: "String"}
+                body: {name: "String", picture: "String"}
             }
         });
     })

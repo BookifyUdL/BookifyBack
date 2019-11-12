@@ -6,7 +6,8 @@ exports.create_review = (req, res, next) => {
     const review = new Review({
         _id: mongoose.Types.ObjectId(),
         stars: req.body.stars,
-        sentiment: req.body.sentiment
+        feeling: req.body.feeling,
+        user: req.body.user
     });
     review.save()
     .then(result => {
@@ -16,7 +17,8 @@ exports.create_review = (req, res, next) => {
             createdReview: {
                 _id: result._id,
                 stars: result.stars,
-                sentiment: result.sentiment,
+                feeling: result.feeling,
+                user: result.user,
                 request: {
                     type: 'GET',
                     url: 'http://localhost:3000/reviews/' + result._id
@@ -39,7 +41,8 @@ exports.get_all_review = (req, res, next) => {
                     return {
                         _id: result._id,
                         stars: result.stars,
-                        sentiment: result.sentiment,
+                        feeling: result.feeling,
+                        user: result.user,
                         //extra information, about how to do a get.
                         request: {
                             type: 'GET',
@@ -118,7 +121,7 @@ exports.delete_review = (req, res, next) => {
             request:{
                 type: "POST",
                 url: "http://localhost:3000/reviews/",
-                body: {stars: "Number", sentiment: "String"}
+                body: {stars: "Number", feeling: "String array"}
             }
         });
     })
