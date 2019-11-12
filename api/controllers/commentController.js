@@ -8,7 +8,10 @@ exports.create_comment = (req, res, next) => {
         message: req.body.message,
         book: req.body.book,
         user: req.body.user,
-        parent: req.body.parent
+        user_liked: req.body.user_liked,
+        uri: req.body.uri,
+        comment_type: req.body.comment_type,
+        subreviews: req.body.subreviews
     });
     comment.save()
     .then(result => {
@@ -20,7 +23,10 @@ exports.create_comment = (req, res, next) => {
                 message: result.message,
                 book: result.book,
                 user: result.user,
-                parent: result.parent,
+                user_liked: req.body.user_liked,
+                uri: req.body.uri,
+                comment_type: req.body.comment_type,
+                subreviews: req.body.subreviews,
                 request: {
                     type: 'GET',
                     url: 'http://localhost:3000/comments/' + result._id
@@ -125,10 +131,15 @@ exports.delete_comment = (req, res, next) => {
             request:{
                 type: "POST",
                 url: "http://localhost:3000/comments/",
-                body: {message: "String", 
-                        book: "bookId",
-                        user: "userId",
-                        parent: "parentCommentId"}
+                body: {
+                    message: "String", 
+                    book: "Book",
+                    user: "User",
+                    user_liked: "User Array",
+                    uri: "String",
+                    comment_type: "Number",
+                    subreviews: "Review Array"
+                }
             }
         });
     })

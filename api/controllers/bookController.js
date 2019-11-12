@@ -9,12 +9,12 @@ exports.create_book = (req, res, next) => {
         title: req.body.title,
         summary: req.body.summary,
         _id: req.body._id,
-        publisher: req.body.publisher,
         num_pages: req.body.num_pages,
         publication_date: req.body.publication_date,
         author: req.body.author,
         genre: req.body.genre,
-        cover_image: req.body.cover_image
+        cover_image: req.body.cover_image,
+        comments: req.body.comments
     });
     book.save()
     .then(result => {
@@ -26,12 +26,12 @@ exports.create_book = (req, res, next) => {
                 title: result.title,
                 summary: result.summary,
                 _id: result._id,
-                publisher: result.publisher,
                 num_pages: result.num_pages,
                 publication_date: result.publication_date,
                 author: result.author,
                 genre: result.genre,
                 cover_image: result.cover_image,
+                comments: result.comments,
                 request: {
                     type: 'GET',
                     url: 'http://localhost:3000/books/' + result._id
@@ -59,12 +59,12 @@ exports.get_all_books = (req, res, next) => {
                         title: result.title,
                         summary: result.summary,
                         _id: result._id,
-                        publisher: result.publisher,
                         num_pages: result.num_pages,
                         publication_date: result.publication_date,
                         author: result.author,
                         genre: result.genre,
                         cover_image: result.cover_image,
+                        comments: result.comments,
                         //extra information, about how to do a get.
                         request: {
                             type: 'GET',
@@ -175,7 +175,16 @@ exports.delete_book = (req, res, next) => {
             request:{
                 type: "POST",
                 url: "http://localhost:3000/books/",
-                body: {name: "String" , price: "Number"}
+                body: {
+                    title: "String",
+                    summary: "String",
+                    num_pages: "Number",
+                    publication_date: "Date",
+                    author: "Author Array",
+                    genre: "Genre Array",
+                    cover_image: "String",
+                    comments: "Comment Array"
+                }
             }
         });
     })
