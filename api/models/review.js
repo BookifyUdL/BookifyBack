@@ -7,7 +7,7 @@ const ReviewSchema = mongoose.Schema({
     required: true
   },
   feeling: {
-    type: [String],
+    type: [Number],
     required: true
   },
   user: {
