@@ -21,23 +21,53 @@ You must be inside the project and then execute the following instruction:
 
 IMPORTANT: Whenever you change something on the server you just have to save and it reuploads it automatically.
 
-## API urls
-Global_Url: https://localhost:3000/
-Entities Urls: 
+## API EndPoints
+Global End Point: https://localhost:3000/
+Entities End Points: 
 ```
 {
   "Books": "https://localhost:3000/books",
   "Authors": "https://localhost:3000/authors",
   "Comments": "https://localhost:3000/comment",
-  "Comments": "https://localhost:3000/comment",
   "Users": "https://localhost:3000/users",
   "Achievements": "https://localhost:3000/achievements",
-  "Shop": "https://localhost:3000/shops",
-  "Genre": "https://localhost:3000/genres",
-  "Item": "https://localhost:3000/items"
+  "Shops": "https://localhost:3000/shops",
+  "Genres": "https://localhost:3000/genres",
+  "Items": "https://localhost:3000/items"
 }
 ```
 
-
 ## API examples (POST, GET, PATCH, DELETE)
+This are just examples, try the other endpoints on your own.
+### POST 
+Send POST to the endpoint https://localhost:3000/genres to create a resource.
+Body:
+```
+  {
+    "name": "Java"
+  }
+ ```
+### GET
+Send GET to the endpoint: https://localhost:3000/genres to get all resources.
+Body: None
+
+Send GET to the endpoint: https://localhost:3000/genres/:id to get a specific resource. (id --> entity id value)
+Body: None
+
+### PATCH
+Send PATCH to the endpoint: https://localhost:3000/genres/:id to update/modify a specific resource. (id --> entity id value)
+```
+[
+  {
+    "propName":"name", "value": "Adventure"
+  }
+]
+```
+IMPORTANT: Add as much lines as properties of that entity you want to change.
+
+### DELETE
+Send DELETE to the endpoint: https://localhost:3000/genres:id to delete a specific resource. (id --> entity id value)
+Body: None
+
+
 
