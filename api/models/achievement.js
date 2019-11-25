@@ -6,8 +6,17 @@ const AchievementSchema = mongoose.Schema({
     type: String,
     required: true,
     unique: true
-  }
-
+  },
+  points: {
+    type: Number,
+    required: true,
+    unique: true
+  },
+  rank: {
+    type: Number,
+    required: true,
+    unique: true
+  },
 });
 
 var AchievementModel = mongoose.model('Achievement', AchievementSchema);

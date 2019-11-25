@@ -27,7 +27,7 @@ exports.create_genre = (req, res, next) => {
         });
     })
     .catch(err => console.log(err));
-}
+};
 
 exports.get_all_genres = (req, res, next) => {
     Genre
@@ -59,7 +59,7 @@ exports.get_all_genres = (req, res, next) => {
     })
     .catch(err => {
         res.status(500).json({
-            error: err    
+            error: err
         });
     });
 }
@@ -82,12 +82,12 @@ exports.get_genre = (req, res, next) => {
         } else {
             res.status(404).json({message: "No result found, for the id you've searched"})
         }
-    }) 
+    })
     .catch(err => {
         console.log(err)
         res.status(500).json({error:err});
     });
-}
+};
 
 exports.update_genre = (req, res, next) => {
     const id = req.params.genreId;
@@ -111,7 +111,7 @@ exports.update_genre = (req, res, next) => {
                 error: err
             });
         });
-}
+};
 
 exports.delete_genre = (req, res, next) => {
     const id = req.params.genreId;
