@@ -5,6 +5,98 @@ const User = require('../models/user.js');
 
 /*TODO modify this controller (_maybe)*/
 
+exports.update_user = (req, res, next) => {
+    const id = req.params.userId;
+    const updateOps = {};
+    for(const ops of req.body) {
+        updateOps[ops.propName] = ops.value; //This will give us an updated object.
+    }
+    User.update({ _id: id }, {$set: updateOps }) //2nd argument, how we want to update this.
+        .exec()
+        .then( result => {
+            res.status(200).json({
+                message: "User information updated",
+                request:{
+                    type: "GET",
+                    url: "http://localhost:3000/users/" + id
+                }
+            });
+        })
+        .catch( err => {
+            res.status(500).json({
+                error: err
+            });
+        });
+};
+
+exports.get_user = (req, res, next) => {
+    const userId = req.params.userId;//params--> object with all the params we have.
+    User.findById(userId)
+        .exec()
+        .then(doc => {
+            console.log("From Database: " + doc);
+            if(doc){
+                res.status(200).json({
+                    genre: doc,
+                    request: {
+                        type: 'GET',
+                        description: "GET_ALL_USERS",
+                        url: 'http://localhost:3000/users/'
+                    }
+                });
+            } else {
+                res.status(404).json({message: "No result found, for the id you've searched"})
+            }
+        })
+        .catch(err => {
+            console.log(err)
+            res.status(500).json({error:err});
+        });
+};
+
+exports.get_all_users = (req, res, next) => {
+    User
+        .find()//Without parameters it will get all the options.
+        .exec()
+        .then(results => {
+            if(results.length >= 0){
+                const response = {
+                    count: results.length,
+                    users: results.map( result => {
+                        return {
+                            _id: result._id,
+                            name: result.name,
+                            firebaseId: result.firebaseId,
+                            userPicture: result.userPicture,
+                            premium: result.premium,
+                            achievements: result.achievements,
+                            library: result.library,
+                            read_book: result.read_book,
+                            interested_book: result.interested_book,
+                            genres: result.genres,
+                            email: result.email,
+
+                            request: {
+                                type: 'GET',
+                                url: 'http://localhost:3000/users/' + result._id
+                            }
+                        }
+                    })//map --> map it into a new array.
+                }
+                res.status(200).json(response);
+            } else {
+                res.status(404).json({
+                    message: "No entries found"
+                });
+            }
+        })
+        .catch(err => {
+            res.status(500).json({
+                error: err
+            });
+        });
+};
+
 exports.user_signup = (req, res, next) => {
     User.find({email: req.body.email})
         .exec()
