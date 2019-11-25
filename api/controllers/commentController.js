@@ -49,7 +49,12 @@ exports.get_all_comment = (req, res, next) => {
                 comments: results.map( result => {
                     return {
                         _id: result._id,
-                        name: result.name,
+                        comment: result.message,
+                        commentType: result.comment_type,
+                        url: result.uri,
+                        book: result.book,
+                        user: result.user,
+                        userLiked: result.user_liked,
                         //extra information, about how to do a get.
                         request: {
                             type: 'GET',
@@ -67,7 +72,7 @@ exports.get_all_comment = (req, res, next) => {
     })
     .catch(err => {
         res.status(500).json({
-            error: err    
+            error: err
         });
     });
 }
@@ -90,7 +95,7 @@ exports.get_comment = (req, res, next) => {
         } else {
             res.status(404).json({message: "No result found, for the id you've searched"})
         }
-    }) 
+    })
     .catch(err => {
         console.log(err)
         res.status(500).json({error:err});
@@ -132,7 +137,7 @@ exports.delete_comment = (req, res, next) => {
                 type: "POST",
                 url: "http://localhost:3000/comments/",
                 body: {
-                    message: "String", 
+                    message: "String",
                     book: "Book",
                     user: "User",
                     user_liked: "User Array",
