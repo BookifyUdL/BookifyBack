@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 
+const checkAuth = require('../middleware/check-auth');
+
 const BookController = require('../controllers/bookController');
 
 //Create user
