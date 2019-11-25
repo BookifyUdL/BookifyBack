@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const User = require('../models/user.js');
 
 /*TODO modify this controller (_maybe)*/
 
@@ -48,11 +49,11 @@ exports.user_signup = (req, res, next) => {
                             res.status(500).json({
                                 error: err
                             });
-                        });    
+                        });
                     }
                 });
             }
-        /*});    
+        /*});
 }*/
 
 exports.user_login = (req,res,next) => {
@@ -71,12 +72,12 @@ exports.user_login = (req,res,next) => {
                     email: user[0].email,
                     userId: user[0]._id,
                 },
-                process.env.JWT_KEY, 
+                process.env.JWT_KEY,
                 {
                     expiresIn: "1h"
                 }
                 );
-                
+
                 return res.status(200).json({
                     message:"Auth successful",
                     token: token
@@ -98,7 +99,7 @@ exports.user_login = (req,res,next) => {
                     email: user[0].email,
                     userId: user[0]._id,
                 },
-                process.env.JWT_KEY, 
+                process.env.JWT_KEY,
                 {
                     expiresIn: "1h"
                 }

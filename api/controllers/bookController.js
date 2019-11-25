@@ -8,7 +8,6 @@ exports.create_book = (req, res, next) => {
         _id: mongoose.Types.ObjectId(),
         title: req.body.title,
         summary: req.body.summary,
-        _id: req.body._id,
         num_pages: req.body.num_pages,
         publication_date: req.body.publication_date,
         author: req.body.author,
@@ -82,7 +81,7 @@ exports.get_all_books = (req, res, next) => {
     })
     .catch(err => {
         res.status(500).json({
-            error: err    
+            error: err
         });
     });
 }
@@ -107,7 +106,7 @@ exports.get_book_by_title = (req, res, next) => {
         } else {
             res.status(404).json({message: "No result found, for the id you've searched"})
         }
-    }) 
+    })
     .catch(err => {
         console.log(err)
         res.status(500).json({error:err});
@@ -115,7 +114,7 @@ exports.get_book_by_title = (req, res, next) => {
 }
 
 
-exports.get_book_by_genre = (req, res, next) => { 
+exports.get_book_by_genre = (req, res, next) => {
     const genre = req.params.bookGenre;//params--> object with all the params we have.
     Book.findOne({projection: {bookGenre: genre}}).toArray(function(err, result) {
         if (err) throw err;
@@ -136,7 +135,7 @@ exports.get_book_by_genre = (req, res, next) => {
         } else {
             res.status(404).json({message: "No result found, for the id you've searched"})
         }
-    }) 
+    })
     .catch(err => {
         console.log(err)
         res.status(500).json({error:err});
