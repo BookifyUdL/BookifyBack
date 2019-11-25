@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 
 const AuthorController = require('../controllers/reviewController');
+const ReviewController = require('../controllers/reviewController');
+
 
 //Create user
 router.post('/', AuthorController.create_review);

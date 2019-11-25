@@ -5,7 +5,9 @@ exports.create_achievement = (req, res, next) => {
     console.log(req.file);
     const achievement = new Achievement({
         _id: mongoose.Types.ObjectId(),
-        name: req.body.name
+        name: req.body.name,
+        rank: req.body.rank,
+        points: req.body.points
     });
     achievement.save()
     .then(result => {
@@ -15,6 +17,8 @@ exports.create_achievement = (req, res, next) => {
             createdAchievement: {
                 _id: result._id,
                 name: result.name,
+                points: result.points,
+                rank: result.rank,
                 request: {
                     type: 'GET',
                     url: 'http://localhost:3000/achievements/' + result._id
@@ -38,6 +42,8 @@ exports.get_all_achievement = (req, res, next) => {
                     return {
                         _id: result._id,
                         name: result.name,
+                        points: result.points,
+                        rank: result.rank,
                         //extra information, about how to do a get.
                         request: {
                             type: 'GET',
@@ -55,7 +61,7 @@ exports.get_all_achievement = (req, res, next) => {
     })
     .catch(err => {
         res.status(500).json({
-            error: err    
+            error: err
         });
     });
 }
@@ -78,7 +84,7 @@ exports.get_achievement = (req, res, next) => {
         } else {
             res.status(404).json({message: "No result found, for the id you've searched"})
         }
-    }) 
+    })
     .catch(err => {
         console.log(err)
         res.status(500).json({error:err});
