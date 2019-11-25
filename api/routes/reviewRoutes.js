@@ -1,17 +1,19 @@
 const express = require('express');
 const router = express.Router();
 
-const AuthorController = require('../controllers/reviewController');
+const checkAuth = require('../middleware/check-auth');
+
+const ReviewController = require('../controllers/reviewController');
 
 //Create user
-router.post('/', AuthorController.create_review);
+router.post('/', ReviewController.create_review);
 
-router.get('/', AuthorController.get_all_review);
+router.get('/', ReviewController.get_all_review);
 
-router.get('/:reviewId', AuthorController.get_review);
+router.get('/:reviewId', ReviewController.get_review);
 
-router.patch('/:reviewId', AuthorController.update_review);
+router.patch('/:reviewId', ReviewController.update_review);
 
-router.delete('/:reviewId', AuthorController.delete_review);
+router.delete('/:reviewId', ReviewController.delete_review);
 
 module.exports = router;
