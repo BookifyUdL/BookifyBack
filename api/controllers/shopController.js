@@ -6,6 +6,7 @@ exports.create_shop = (req, res, next) => {
     const shop = new Shop({
         _id: mongoose.Types.ObjectId(),
         name: req.body.name,
+        url: req.body.url,
     });
     shop.save()
     .then(result => {
@@ -15,6 +16,7 @@ exports.create_shop = (req, res, next) => {
             createdShop: {
                 _id: result._id,
                 name: result.name,
+                url: result.url,
                 request: {
                     type: 'GET',
                     url: 'http://localhost:3000/shops/' + result._id
@@ -37,6 +39,7 @@ exports.get_all_shop = (req, res, next) => {
                     return {
                         _id: result._id,
                         name: result.name,
+                        url: result.url,
                         //extra information, about how to do a get.
                         request: {
                             type: 'GET',
@@ -54,7 +57,7 @@ exports.get_all_shop = (req, res, next) => {
     })
     .catch(err => {
         res.status(500).json({
-            error: err    
+            error: err
         });
     });
 }
@@ -76,7 +79,7 @@ exports.get_shop = (req, res, next) => {
         } else {
             res.status(404).json({message: "No result found, for the id you've searched"})
         }
-    }) 
+    })
     .catch(err => {
         console.log(err)
         res.status(500).json({error:err});

@@ -27,7 +27,7 @@ exports.update_user = (req, res, next) => {
                 error: err
             });
         });
-};
+}
 
 exports.get_user = (req, res, next) => {
     const userId = req.params.userId;//params--> object with all the params we have.
