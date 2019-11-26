@@ -8,9 +8,9 @@ file = open('com_book.csv', 'w')
 writer = csv.writer(file)
 data = ['Title', 'URL-Cover', 'Author', 'Description', 'Extension', 'Language', 'Isbn', 'Year', 'Price']
 writer.writerow(data)
-client = MongoClient("mongodb+srv://admin:admin123@cluster0-nxv9z.mongodb.net/test?retryWrites=true&w=majority")
+client = MongoClient("mongodb+srv://admin:U2D8PSgwPKhNdJoX@cluster0-nxv9z.mongodb.net/test?retryWrites=true&w=majority")
 db = client.test
-
+db.books.delete_many({})
 while page_no < 3:
     try:
         if page_no == 1:
@@ -75,14 +75,26 @@ while page_no < 3:
                     genreObject = {}
                     genreObject['name'] = 'Literature'
                     genreObject['picture'] = 'https://webstockreview.net/images/clipart-book-symbol-17.png'
+
                     authorObject = {}
                     authorObject['name'] = author
+                    #db.authors.
+
+                    resultAuthors = db.authors.find_one({'name': author})
+                    authorId = 0
+                    if resultAuthors == None:
+                        insertResult = db.authors.insert_one(authorObject)
+                        resultAuthors = db.authors.find_one({'name': author})
+                        authorId = resultAuthors['_id']
+                    else:
+                        authorId = resultAuthors['_id']
+
                     toinsert = {}
                     toinsert['title'] = title
                     toinsert['summary'] = description
                     toinsert['num_page'] = pageNum
                     toinsert['publication_date'] = year
-                    toinsert['author'] = authorObject
+                    toinsert['author'] = authorId
                     toinsert['genre'] = {}
                     toinsert['cover_image'] = picture
                     toinsert['comments'] = {}
