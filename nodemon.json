@@ -1,6 +1,6 @@
 {
     "env": {
-       "MONGODB_ATLAS_PW": "7K4SEfgJcdbAdYpJ",
-       "GOOGLE_BOOKS_API_KEY": "AIzaSyAhAwt3o6J83_2UqRU7Iy3GiKLxju2tbiI"
+       "MONGODB_ATLAS_PW": "U2D8PSgwPKhNdJoX",
+       "JWT_KEY": "bookify1this9one"
     }
 }

@@ -16,9 +16,9 @@ const achievementRoutes = require('./api/routes/achievementRoutes');
 
 //MongoDB connection PATH
 mongoose
-    .connect("mongodb+srv://user:" +
+    .connect("mongodb+srv://admin:" +
         process.env.MONGODB_ATLAS_PW + 
-        "@bookify-db-pvbee.mongodb.net/test?retryWrites=true&w=majority",
+        "@cluster0-nxv9z.mongodb.net/test?retryWrites=true&w=majority",
         {
             useNewUrlParser: true,
             useUnifiedTopology: true

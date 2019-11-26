@@ -87,10 +87,7 @@ exports.get_all_books = (req, res, next) => {
 }
 exports.get_book_by_title = (req, res, next) => {
     const title = req.params.bookTitle;//params--> object with all the params we have.
-    Book.findOne({projection: {bookTitle: title}}).toArray(function(err, result) {
-        if (err) throw err;
-        console.log(result);
-    })
+    Book.find({"title": title})
     .exec()
     .then(doc => {
         console.log("From Database: " + doc);
@@ -115,11 +112,8 @@ exports.get_book_by_title = (req, res, next) => {
 
 
 exports.get_book_by_genre = (req, res, next) => {
-    const genre = req.params.bookGenre;//params--> object with all the params we have.
-    Book.findOne({projection: {bookGenre: genre}}).toArray(function(err, result) {
-        if (err) throw err;
-        console.log(result);
-    })
+    const genre = req.params.bookGenre[0];//params--> object with all the params we have.
+    Book.find({"genre": genre})
     .exec()
     .then(doc => {
         console.log("From Database: " + doc);
