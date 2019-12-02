@@ -1,16 +1,22 @@
 import requests
 import csv
+import re
 from pymongo import MongoClient
 from bs4 import BeautifulSoup
+from selenium.webdriver import Chrome
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+from webdriver_manager.chrome import ChromeDriverManager
+#import pandas as pd
 
 page_no = 1
 file = open('com_book.csv', 'w')
 writer = csv.writer(file)
 data = ['Title', 'URL-Cover', 'Author', 'Description', 'Extension', 'Language', 'Isbn', 'Year', 'Price']
 writer.writerow(data)
-client = MongoClient("mongodb+srv://admin:U2D8PSgwPKhNdJoX@cluster0-nxv9z.mongodb.net/test?retryWrites=true&w=majority")
-db = client.test
-db.books.delete_many({})
+#client = MongoClient("mongodb+srv://admin:U2D8PSgwPKhNdJoX@cluster0-nxv9z.mongodb.net/test?retryWrites=true&w=majority")
+#db = client.test
+#db.books.delete_many({})
 while page_no < 3:
     try:
         if page_no == 1:
@@ -22,12 +28,51 @@ while page_no < 3:
             string = 'p' + str(page_no)
         page_no += 1
 
-        url = 'https://www.casadellibro.com/libros/literatura/121000000/p2' + string
+        url = 'https://www.casadellibro.com/libros/literatura/121000000/' + string
         print ('Fetching data from ',url)
-        response = requests.get(url)
-        soup = BeautifulSoup(response.content, 'html.parser')
-        basicwrap = soup.find_all(class_='product')
+        # response = requests.get(url)
+        # soup = BeautifulSoup(response.content, 'html.parser')
+        # basicwrap = soup.find_all(class_='product')
+
+        #selenium part
+        try:
+            # driver = webdriver.Firefox(firefox_binary=binary,
+            #                    executable_path="/home/radu/Descargas/backend/script")
+            driver = webdriver.Firefox()
+            driver.get(url)
+            productsAux = driver.find_elements_by_class_name("results-page")
+            print "kk-k\n\n"
+            print type(driver.page_source)
+            soup = BeautifulSoup(driver.page_source, 'html.parser')
+            basicwrap = soup.find_all(class_='product')
+            for product in basicwrap:
+                priceZone = (product.find(class_="price").get_text().strip())
+                #priceZone = priceZone.decode("ascii", "ignore")
+                utf8string = priceZone.encode("utf-8")
+                aux = utf8string.split(" ")[0]
+                price = ""
+                for c in aux:
+                    if c.isdigit() or c == ".":
+                        price += c
+                print price
+                exit(1)
+        except Exception as e:
+            print e
+        print "cojio"
+        print "verga"
+        print products
+        exit(0)
+
+
+
         for i in basicwrap:
+             try:
+                 priceZone = (i.find(class_="block-down"))
+                 print priceZone
+                 exit(1)
+             except:
+                 priceZone = None
+             exit(1)
              try:
                  bookUrl = (i.find(class_='title'))
                  bookUrl = bookUrl['href']
@@ -78,29 +123,30 @@ while page_no < 3:
 
                     authorObject = {}
                     authorObject['name'] = author
-                    #db.authors.
 
-                    resultAuthors = db.authors.find_one({'name': author})
-                    authorId = 0
-                    if resultAuthors == None:
-                        insertResult = db.authors.insert_one(authorObject)
-                        resultAuthors = db.authors.find_one({'name': author})
-                        authorId = resultAuthors['_id']
-                    else:
-                        authorId = resultAuthors['_id']
+
+                    # resultAuthors = db.authors.find_one({'name': author})
+                    # authorId = 0
+                    # if resultAuthors == None:
+                    #     insertResult = db.authors.insert_one(authorObject)
+                    #     resultAuthors = db.authors.find_one({'name': author})
+                    #     authorId = resultAuthors['_id']
+                    # else:
+                    #     authorId = resultAuthors['_id']
 
                     toinsert = {}
                     toinsert['title'] = title
                     toinsert['summary'] = description
                     toinsert['num_page'] = pageNum
                     toinsert['publication_date'] = year
-                    toinsert['author'] = authorId
+                    #toinsert['author'] = authorId
                     toinsert['genre'] = {}
                     toinsert['cover_image'] = picture
                     toinsert['comments'] = {}
                     toinsert['genre'] = genreObject
-                    _v_ = db.books.insert_one(toinsert)
-                    print _v_
+                    # _v_ = db.books.insert_one(toinsert)
+                    # print _v_
+                    print toinsert
                 except Exception as e:
                     pageNum = None
                     language = None

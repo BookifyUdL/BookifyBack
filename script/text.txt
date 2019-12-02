@@ -1,0 +1,8 @@
+('Fetching data from ', 'https://www.casadellibro.com/libros/literatura/121000000/')
+kk-k
+
+
+<type 'unicode'>
+1
+
+['12.95\xe2\x82\xac']
