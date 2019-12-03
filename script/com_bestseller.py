@@ -9,13 +9,28 @@ from selenium.webdriver.common.keys import Keys
 from webdriver_manager.chrome import ChromeDriverManager
 import json
 #import pandas as pd
+def check_param_name(received, extracted):
+    words = received.split(" ")
+    for word in words:
+        if word in extracted:
+            return True
+    return False
+
+def scrap_book_from_fnac(title, author):
+    if("(" in title):
+        aux = title.split('(')[0]
+    else:
+        aux = title
+    url = "https://www.fnac.es/SearchResult/ResultList.aspx?SCat=0%211&Search=" + aux + " " + author + "&sft=1&sa=0"
+    print url
+
 def scrap_book_from_corte_ingles(title, author):
     if("(" in title):
         aux = title.split('(')[0]
     else:
         aux = title
     url = "https://www.elcorteingles.es/libros/search/?s=" + aux + " " + author
-    print url
+    #print url
     response = requests.get(url)
     soup = BeautifulSoup(response.content, 'html.parser')
     basicwrap = soup.find_all(class_='product-list 4')
@@ -29,29 +44,12 @@ def scrap_book_from_corte_ingles(title, author):
             bookName = (bookInfo.find(class_='info-name').get_text().strip())
             bookUrl = "elcorteingles.es" + (bookInfo.find(class_='info-name').find('a')['href'])
             authorName = (bookInfo.find(class_='brand c12').get_text().strip())
+            bookCheck = (aux.upper() in bookName.upper()) or (check_param_name(aux, bookName))
+            authorCheck = (author.upper() in authorName.upper()) or (check_param_name(author, authorName))
+            if(bookCheck or authorCheck):
+                return bookUrl, price
+    return None, None
 
-            print price
-            print bookName
-            print bookUrl
-            print "------------\n\n"
-            print authorName
-
-
-            #bookJson = book.find('data-json')
-            #print bookJson
-            exit(0)
-
-        print content
-        exit(0)
-        bookInfo = basicwrap['data-json']
-        print bookInfo
-        exit(0)
-
-    print basicwrap
-    # #basicwrap = soup.find_all(class_='product')
-    # basicwrap = soup.find_all(class_='product-list 4')
-    #print basicwrap
-    exit(0)
 
 page_no = 1
 file = open('com_book.csv', 'w')
@@ -174,9 +172,12 @@ while page_no < 3:
                     # _v_ = db.books.insert_one(toinsert)
                     # print _v_
                     print "Scrapping book from corte ingles"
-                    #print toinsert
-                    scrap_book_from_corte_ingles(title, author)
-                    exit(0)
+                    corteInglesBookURl, corteInglesBookPrice = scrap_book_from_corte_ingles(title, author)
+                    if corteInglesBookURl != None and corteInglesBookPrice != None:
+                        print "Extraido"
+                        print corteInglesBookURl
+                        print corteInglesBookPrice
+                    #exit(0)
                 except Exception as e:
                     pageNum = None
                     language = None
