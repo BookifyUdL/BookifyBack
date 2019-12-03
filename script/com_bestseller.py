@@ -7,17 +7,64 @@ from selenium.webdriver import Chrome
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from webdriver_manager.chrome import ChromeDriverManager
+import json
 #import pandas as pd
+def scrap_book_from_corte_ingles(title, author):
+    if("(" in title):
+        aux = title.split('(')[0]
+    else:
+        aux = title
+    url = "https://www.elcorteingles.es/libros/search/?s=" + aux + " " + author
+    print url
+    response = requests.get(url)
+    soup = BeautifulSoup(response.content, 'html.parser')
+    basicwrap = soup.find_all(class_='product-list 4')
+    for product in basicwrap:
+        content = product.findAll('li')
+        for book in content:
+            bookInfo = (book.find(class_='dataholder js-dataholder-product'))
+            bookInfoJson = json.loads(bookInfo['data-json'])
+            price = bookInfoJson["price"]["final"]
+            bookInfo = (book.find(class_='info'))
+            bookName = (bookInfo.find(class_='info-name').get_text().strip())
+            bookUrl = "elcorteingles.es" + (bookInfo.find(class_='info-name').find('a')['href'])
+            authorName = (bookInfo.find(class_='brand c12').get_text().strip())
+
+            print price
+            print bookName
+            print bookUrl
+            print "------------\n\n"
+            print authorName
+
+
+            #bookJson = book.find('data-json')
+            #print bookJson
+            exit(0)
+
+        print content
+        exit(0)
+        bookInfo = basicwrap['data-json']
+        print bookInfo
+        exit(0)
+
+    print basicwrap
+    # #basicwrap = soup.find_all(class_='product')
+    # basicwrap = soup.find_all(class_='product-list 4')
+    #print basicwrap
+    exit(0)
 
 page_no = 1
 file = open('com_book.csv', 'w')
-writer = csv.writer(file)
-data = ['Title', 'URL-Cover', 'Author', 'Description', 'Extension', 'Language', 'Isbn', 'Year', 'Price']
-writer.writerow(data)
+#writer = csv.writer(file)
+#data = ['Title', 'URL-Cover', 'Author', 'Description', 'Extension', 'Language', 'Isbn', 'Year', 'Price']
+#writer.writerow(data)
+
 #client = MongoClient("mongodb+srv://admin:U2D8PSgwPKhNdJoX@cluster0-nxv9z.mongodb.net/test?retryWrites=true&w=majority")
 #db = client.test
 #db.books.delete_many({})
+
 while page_no < 3:
+
     try:
         if page_no == 1:
             string = ''
@@ -35,44 +82,23 @@ while page_no < 3:
         # basicwrap = soup.find_all(class_='product')
 
         #selenium part
-        try:
-            # driver = webdriver.Firefox(firefox_binary=binary,
-            #                    executable_path="/home/radu/Descargas/backend/script")
-            driver = webdriver.Firefox()
-            driver.get(url)
-            productsAux = driver.find_elements_by_class_name("results-page")
-            print "kk-k\n\n"
-            print type(driver.page_source)
-            soup = BeautifulSoup(driver.page_source, 'html.parser')
-            basicwrap = soup.find_all(class_='product')
-            for product in basicwrap:
-                priceZone = (product.find(class_="price").get_text().strip())
-                #priceZone = priceZone.decode("ascii", "ignore")
-                utf8string = priceZone.encode("utf-8")
-                aux = utf8string.split(" ")[0]
-                price = ""
-                for c in aux:
-                    if c.isdigit() or c == ".":
-                        price += c
-                print price
-                exit(1)
-        except Exception as e:
-            print e
-        print "cojio"
-        print "verga"
-        print products
-        exit(0)
 
-
-
+        driver = webdriver.Firefox()
+        driver.get(url)
+        productsAux = driver.find_elements_by_class_name("results-page")
+        soup = BeautifulSoup(driver.page_source, 'html.parser')
+        basicwrap = soup.find_all(class_='product')
         for i in basicwrap:
              try:
-                 priceZone = (i.find(class_="block-down"))
-                 print priceZone
-                 exit(1)
+                 priceZone = (i.find(class_="price").get_text().strip())
+                 utf8string = priceZone.encode("utf-8")
+                 aux = utf8string.split(" ")[0]
+                 price = ""
+                 for c in aux:
+                     if c.isdigit() or c == ".":
+                         price += c
              except:
-                 priceZone = None
-             exit(1)
+                price =  None
              try:
                  bookUrl = (i.find(class_='title'))
                  bookUrl = bookUrl['href']
@@ -144,21 +170,28 @@ while page_no < 3:
                     toinsert['cover_image'] = picture
                     toinsert['comments'] = {}
                     toinsert['genre'] = genreObject
+                    toinsert['price'] = price
                     # _v_ = db.books.insert_one(toinsert)
                     # print _v_
-                    print toinsert
+                    print "Scrapping book from corte ingles"
+                    #print toinsert
+                    scrap_book_from_corte_ingles(title, author)
+                    exit(0)
                 except Exception as e:
                     pageNum = None
                     language = None
                     isbn = None
                     year = None
-                    print "No funko"
+                    #driver.quit()
+                    print "No funciono correctamente"
                     print e
              else:
                 pageNum = None
                 language = None
                 isbn = None
                 year = None
+                #driver.quit()
              #data = ['Title', 'URL-Cover', 'Author', 'Description', 'Extension', 'Language', 'Isbn', 'Year', 'Price']
+             #driver.quit()
     except:
         break
