@@ -7,11 +7,11 @@ const CommentSchema = mongoose.Schema({
     required: true,
     unique: true
   },
-  book: {
+/*  book: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Book',
     required: true
-  },
+  },*/
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
