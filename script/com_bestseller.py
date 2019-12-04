@@ -8,6 +8,7 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from webdriver_manager.chrome import ChromeDriverManager
 import json
+import random
 #import pandas as pd
 genres_list = []
 casa_del_libro_id = 0
@@ -77,14 +78,14 @@ def scrap_book_from_corte_ingles(title, author):
 
 def add_genre_by_name(genre):
     resultGenres = db.genres.find_one({'name': genre['name']})
-    authorId = 0
+    genreId = 0
     if resultGenres == None:
         insertResult = db.genres.insert_one(genre)
-        resultGenres = db.genres.find_one({'name': genre['name']})        
-        genreId = resultGenres['_id']
+        resultGenres = db.genres.find_one({'name': genre['name']})
+        genreId = insertResult.inserted_id
     else:
-        authorId = resultGenres['_id']
-    genres_list.append(authorId)
+        genreId = resultGenres['_id']
+    genres_list.append(genreId)
 
 def add_genres(db):
     db.genres.delete_many({})
@@ -139,36 +140,40 @@ def add_shops(db):
     shop1['name'] = 'Casa del Libro'
     shop1['url'] = 'https://www.cuponeto.com/wp-content/uploads/2019/01/casa-del-libro-descuentos.png'
     resultGenres = db.shops.find_one({'name': shop1['name']})
-    if resultAuthors == None:
+    if resultGenres == None:
         insertResult = db.shops.insert_one(shop1)
-        resultGenres = db.shops.find_one({'name': shop1['name']})
-        casa_del_libro_id = resultGenres['_id']
+        #resultGenres = db.shops.find_one({'name': shop1['name']})
+        casa_del_libro_id = insertResult.inserted_id
     else:
         casa_del_libro_id = resultGenres['_id']
+    
 
     shop2 = {}
     shop2['name'] = 'El Corte Ingles'
     shop2['url'] = 'https://www.elcorteingles.es/recursos/informacioncorporativa/img/portal/2017/07/06/el-corte-ingles-triangulo.png'
-    resultGenres = db.shops.find_one({'name': shop2['name']})
-    if resultAuthors == None:
-        insertResult = db.shops.insert_one(shop1)
-        resultGenres = db.shops.find_one({'name': shop2['name']})
-        corte_ingles_id = resultGenres['_id']
+    resultGenres2 = db.shops.find_one({'name': shop2['name']})
+    if resultGenres2 == None:
+        insertResult = db.shops.insert_one(shop2)
+        #resultGenres = db.shops.find_one({'name': shop2['name']})
+        corte_ingles_id = insertResult.inserted_id
     else:
-        corte_ingles_id = resultGenres['_id']
+        corte_ingles_id = resultGenres2['_id']
+
 
     shop3 = {}
     shop3['name'] = 'Fnac'
     shop3['url'] = 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Fnac_Logo.svg/499px-Fnac_Logo.svg.png'
-    resultGenres = db.shops.find_one({'name': shop3['name']})
-    if resultAuthors == None:
+    resultGenres3 = db.shops.find_one({'name': shop3['name']})
+    if resultGenres3 == None:
         insertResult = db.shops.insert_one(shop3)
-        resultGenres = db.shops.find_one({'name': shop1['name']})
-        fnac_id = resultGenres['_id']
+        #resultGenres = db.shops.find_one({'name': shop1['name']})
+        fnac_id = insertResult.inserted_id
     else:
-        fnac_id = resultGenres['_id']
+        fnac_id = resultGenres3['_id']
+
 
 page_no = 1
+first_books = 0
 file = open('com_book.csv', 'w')
 
 client = MongoClient("mongodb+srv://admin:U2D8PSgwPKhNdJoX@cluster0-nxv9z.mongodb.net/test?retryWrites=true&w=majority")
@@ -178,7 +183,7 @@ db.items.delete_many({})
 db.shops.delete_many({})
 
 add_genres(db)
-add_genres(db)
+add_shops(db)
 
 while page_no < 3:
     genres_index = 0
@@ -288,7 +293,18 @@ while page_no < 3:
                     toinsert['cover_image'] = picture
                     toinsert['comments'] = []
                     #toinsert['genre'] = genreObject
-                    toinsert['genre'] = genres_list[genres_index % (len(genres_list) - 1)]
+                    auxi = genres_index % (len(genres_list) - 1)
+                    print auxi
+                    print genres_list[auxi]
+                    toinsert['genre'] = genres_list[auxi]
+                    toinsert['rating'] = random.randint(1, 5)
+                    toinsert['num_rating'] = 1
+                    if(first_books < 10):
+                        toinsert['is_new'] = True
+                        first_books += 1
+                    else:
+                        toinsert['is_new'] = False
+
                     genres_index += 1
                     #toinsert['price'] = price
                     _v_ = db.books.insert_one(toinsert)
