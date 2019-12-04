@@ -142,11 +142,11 @@ def add_shops(db):
     resultGenres = db.shops.find_one({'name': shop1['name']})
     if resultGenres == None:
         insertResult = db.shops.insert_one(shop1)
-        #resultGenres = db.shops.find_one({'name': shop1['name']})
-        casa_del_libro_id = insertResult.inserted_id
+        resultGenres = db.shops.find_one({'name': shop1['name']})
+        casa_del_libro_id = resultGenres['_id']
     else:
         casa_del_libro_id = resultGenres['_id']
-    
+
 
     shop2 = {}
     shop2['name'] = 'El Corte Ingles'
@@ -154,8 +154,8 @@ def add_shops(db):
     resultGenres2 = db.shops.find_one({'name': shop2['name']})
     if resultGenres2 == None:
         insertResult = db.shops.insert_one(shop2)
-        #resultGenres = db.shops.find_one({'name': shop2['name']})
-        corte_ingles_id = insertResult.inserted_id
+        resultGenres = db.shops.find_one({'name': shop2['name']})
+        corte_ingles_id = resultGenres['_id']
     else:
         corte_ingles_id = resultGenres2['_id']
 
@@ -166,11 +166,12 @@ def add_shops(db):
     resultGenres3 = db.shops.find_one({'name': shop3['name']})
     if resultGenres3 == None:
         insertResult = db.shops.insert_one(shop3)
-        #resultGenres = db.shops.find_one({'name': shop1['name']})
-        fnac_id = insertResult.inserted_id
+        resultGenres = db.shops.find_one({'name': shop1['name']})
+        fnac_id = resultGenres['_id']
     else:
         fnac_id = resultGenres3['_id']
 
+    return casa_del_libro_id, corte_ingles_id, fnac_id
 
 page_no = 1
 first_books = 0
@@ -183,7 +184,7 @@ db.items.delete_many({})
 db.shops.delete_many({})
 
 add_genres(db)
-add_shops(db)
+casa_del_libro_id, corte_ingles_id, fnac_id = add_shops(db)
 
 while page_no < 3:
     genres_index = 0
@@ -288,7 +289,7 @@ while page_no < 3:
                     toinsert['summary'] = description
                     toinsert['num_page'] = pageNum
                     toinsert['publication_date'] = year
-                    #toinsert['author'] = authorId
+                    toinsert['author'] = authorId
                     toinsert['genre'] = {}
                     toinsert['cover_image'] = picture
                     toinsert['comments'] = []
@@ -339,7 +340,6 @@ while page_no < 3:
                         cdl['price'] = float(fnacBookPrice)
                         cdl['url'] = fnacBookURl
                         db.items.insert_one(cdl)
-
 
                     print "Todo correcto"
                 except Exception as e:
