@@ -289,7 +289,7 @@ while page_no < 3:
                     toinsert['summary'] = description
                     toinsert['num_page'] = pageNum
                     toinsert['publication_date'] = year
-                    #toinsert['author'] = authorId
+                    toinsert['author'] = authorId
                     toinsert['genre'] = {}
                     toinsert['cover_image'] = picture
                     toinsert['comments'] = []
@@ -341,7 +341,7 @@ while page_no < 3:
                         cdl['url'] = fnacBookURl
                         db.items.insert_one(cdl)
 
-                    print "Todo correcto"                
+                    print "Todo correcto"
                 except Exception as e:
                     pageNum = None
                     language = None
