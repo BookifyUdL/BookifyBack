@@ -38,11 +38,16 @@ const userSchema = mongoose.Schema({
         type: [mongoose.Schema.Types.ObjectId],
         ref: 'Genre'
     },
-    email: { type: String,
+    email: { 
+        type: String,
         required: true,
         unique: true, //unique does not validate the values.
         //Email validation regex.
         match: /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    },
+    premium: {
+        type: Boolean,
+        default: false
     }
 
 

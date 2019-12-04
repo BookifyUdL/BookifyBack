@@ -75,7 +75,7 @@ exports.get_all_users = (req, res, next) => {
                             interested_book: result.interested_book,
                             genres: result.genres,
                             email: result.email,
-
+                            premium: result.premium,
                             request: {
                                 type: 'GET',
                                 url: 'http://localhost:3000/users/' + result._id
@@ -127,6 +127,7 @@ exports.user_signup = (req, res, next) => {
                             interested_book: req.body.interested_book,
                             genres: req.body.genres,
                             email: req.body.email,
+                            premium: req.body.premium,
                             //password: hash
                         });
                         user.save()
