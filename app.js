@@ -11,13 +11,14 @@ const commentRoutes = require('./api/routes/commentRoutes');
 const reviewRoutes = require('./api/routes/reviewRoutes');
 const genreRoutes = require('./api/routes/genreRoutes');
 const achievementRoutes = require('./api/routes/achievementRoutes');
-
+const shopRoutes = require('./api/routes/shopRoutes');
+const itemRoutes = require('./api/routes/itemRoutes');
 
 
 //MongoDB connection PATH
 mongoose
     .connect("mongodb+srv://admin:" +
-        process.env.MONGODB_ATLAS_PW + 
+        process.env.MONGODB_ATLAS_PW +
         "@cluster0-nxv9z.mongodb.net/test?retryWrites=true&w=majority",
         {
             useNewUrlParser: true,
@@ -56,6 +57,8 @@ app.use('/genres', genreRoutes);
 app.use('/achievements', achievementRoutes);
 app.use('/comments', commentRoutes);
 app.use('/reviews', reviewRoutes);
+app.use('/shops', shopRoutes);
+app.use('/items', itemRoutes);
 
 //Handle all requests errors here, because if I arrive here
 // it means that any request has matched with the other file ones.

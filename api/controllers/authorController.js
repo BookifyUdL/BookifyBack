@@ -27,6 +27,7 @@ exports.create_author = (req, res, next) => {
     })
     .catch(err => console.log(err));
 }
+
 exports.get_all_author = (req, res, next) => {
     Author
     .find()//Without parameters it will get all the options.
@@ -58,6 +59,31 @@ exports.get_all_author = (req, res, next) => {
         res.status(500).json({
             error: err    
         });
+    });
+}
+
+exports.get_author_by_name = (req, res, next) => {
+    const name = req.params.name;//params--> object with all the params we have.
+    Author.find({"name": name})
+    .exec()
+    .then(doc => {
+        console.log("From Database: " + doc);
+        if(doc){
+            res.status(200).json({
+                book: doc,
+                request: {
+                    type: 'GET',
+                    description: "GET_AUTHORS",
+                    url: 'http://localhost:3000/authors/'
+                }
+            });
+        } else {
+            res.status(404).json({message: "No result found, for the name you've searched"})
+        }
+    })
+    .catch(err => {
+        console.log(err)
+        res.status(500).json({error:err});
     });
 }
 

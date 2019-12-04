@@ -10,12 +10,10 @@ const AchievementSchema = mongoose.Schema({
   points: {
     type: Number,
     required: true,
-    unique: true
   },
   rank: {
     type: Number,
     required: true,
-    unique: true
   },
 });
 

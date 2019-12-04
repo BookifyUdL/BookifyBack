@@ -11,7 +11,7 @@ const BookSchema = mongoose.Schema({
     type: String,
     required: true
   },
-  num_pages: {
+  num_page: {
       type: Number,
       required: true
   },
@@ -33,9 +33,21 @@ const BookSchema = mongoose.Schema({
     type: String,
     required: true
   },
-  comments:{
+  comments: {
     type: [mongoose.Schema.Types.ObjectId],
     ref: 'Comment'
+  },
+  rating: {
+    type: Number,
+    default:0
+  },
+  num_rating: {
+    type: Number,
+    default: 0
+  },
+  is_new: {
+    type:Boolean,
+    default:false
   }
 });
 

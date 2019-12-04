@@ -40,9 +40,9 @@ exports.get_all_item = (req, res, next) => {
                 items: results.map( result => {
                     return {
                         _id: result._id,
-                        shop_id: result.stars,
-                        book_id: result.feeling,
-                        price: result.user,
+                        shop_id: result.shop_id,
+                        book_id: result.book_id,
+                        price: result.price,
                         //extra information, about how to do a get.
                         request: {
                             type: 'GET',
@@ -60,7 +60,7 @@ exports.get_all_item = (req, res, next) => {
     })
     .catch(err => {
         res.status(500).json({
-            error: err    
+            error: err
         });
     });
 }
@@ -82,7 +82,7 @@ exports.get_item = (req, res, next) => {
         } else {
             res.status(404).json({message: "No result found, for the id you've searched"})
         }
-    }) 
+    })
     .catch(err => {
         console.log(err)
         res.status(500).json({error:err});

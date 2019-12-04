@@ -8,12 +8,15 @@ exports.create_book = (req, res, next) => {
         _id: mongoose.Types.ObjectId(),
         title: req.body.title,
         summary: req.body.summary,
-        num_pages: req.body.num_pages,
+        num_page: req.body.num_page,
         publication_date: req.body.publication_date,
         author: req.body.author,
         genre: req.body.genre,
         cover_image: req.body.cover_image,
-        comments: req.body.comments
+        comments: req.body.comments,
+        rating: req.body.rating,
+        num_rating: req.body.num_rating,
+        is_new: req.body.is_new,
     });
     book.save()
     .then(result => {
@@ -31,6 +34,9 @@ exports.create_book = (req, res, next) => {
                 genre: result.genre,
                 cover_image: result.cover_image,
                 comments: result.comments,
+                rating: result.rating,
+                num_rating: result.num_rating,
+                is_new: result.is_new,
                 request: {
                     type: 'GET',
                     url: 'http://localhost:3000/books/' + result._id
@@ -64,6 +70,9 @@ exports.get_all_books = (req, res, next) => {
                         genre: result.genre,
                         cover_image: result.cover_image,
                         comments: result.comments,
+                        rating: result.rating,
+                        num_rating: result.num_rating,
+                        is_new: result.is_new,
                         //extra information, about how to do a get.
                         request: {
                             type: 'GET',
@@ -85,6 +94,7 @@ exports.get_all_books = (req, res, next) => {
         });
     });
 }
+
 exports.get_book_by_title = (req, res, next) => {
     const title = req.params.bookTitle;//params--> object with all the params we have.
     Book.find({"title": title})
@@ -176,7 +186,10 @@ exports.delete_book = (req, res, next) => {
                     author: "Author Array",
                     genre: "Genre Array",
                     cover_image: "String",
-                    comments: "Comment Array"
+                    comments: "Comment Array",
+                    is_new: "Boolean, false by default",
+                    num_rating: "Number, 0 by default",
+                    rating: "Number, 0 by default"
                 }
             }
         });
