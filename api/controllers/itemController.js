@@ -7,7 +7,8 @@ exports.create_item = (req, res, next) => {
         _id: mongoose.Types.ObjectId(),
         shop_id: req.body.shop_id,
         book_id: req.body.book_id,
-        price: req.body.price
+        price: req.body.price,
+        result: req.body.result
     });
     item.save()
     .then(result => {
@@ -19,6 +20,7 @@ exports.create_item = (req, res, next) => {
                 shop_id: result.shop_id,
                 book_id: result.book_id,
                 price: result.price,
+                url: result.url,
                 request: {
                     type: 'GET',
                     url: 'http://localhost:3000/items/' + result._id
@@ -43,6 +45,7 @@ exports.get_all_item = (req, res, next) => {
                         shop_id: result.shop_id,
                         book_id: result.book_id,
                         price: result.price,
+                        url: result.url,
                         //extra information, about how to do a get.
                         request: {
                             type: 'GET',
@@ -121,7 +124,10 @@ exports.delete_item = (req, res, next) => {
             request:{
                 type: "POST",
                 url: "http://localhost:3000/items/",
-                body: {shop_id: "Shop", book_id: "Book", price: "String"}
+                body: {shop_id: "Shop",
+                       book_id: "Book",
+                       price: "String",
+                       url: "String"}
             }
         });
     })
