@@ -6,7 +6,7 @@ exports.create_comment = (req, res, next) => {
     const comment = new Comment({
         _id: mongoose.Types.ObjectId(),
         message: req.body.message,
-        book: req.body.book,
+        //book: req.body.book,
         user: req.body.user,
         user_liked: req.body.user_liked,
         uri: req.body.uri,
@@ -21,7 +21,7 @@ exports.create_comment = (req, res, next) => {
             createdComment: {
                 _id: result._id,
                 message: result.message,
-                book: result.book,
+                //book: result.book,
                 user: result.user,
                 user_liked: req.body.user_liked,
                 uri: req.body.uri,
@@ -52,7 +52,7 @@ exports.get_all_comment = (req, res, next) => {
                         comment: result.message,
                         commentType: result.comment_type,
                         url: result.uri,
-                        book: result.book,
+                        //book: result.book,
                         user: result.user,
                         userLiked: result.user_liked,
                         //extra information, about how to do a get.
@@ -138,7 +138,7 @@ exports.delete_comment = (req, res, next) => {
                 url: "http://localhost:3000/comments/",
                 body: {
                     message: "String",
-                    book: "Book",
+                    //book: "Book",
                     user: "User",
                     user_liked: "User Array",
                     uri: "String",
