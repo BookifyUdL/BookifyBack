@@ -17,11 +17,11 @@ const CommentSchema = mongoose.Schema({
     ref: 'User',
     required: true
   },
-  user_liked: {
-    type: [mongoose.Schema.Types.ObjectId],
+  user_liked: [{
+    type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
     required: true
-  },
+  }],
   uri: {
     type:String
   },
@@ -29,10 +29,10 @@ const CommentSchema = mongoose.Schema({
     type: Number,
     required: true
   },
-  subreviews: {
-    type:[mongoose.Schema.Types.ObjectId],
+  subreviews: [{
+    type:mongoose.Schema.Types.ObjectId,
     ref: 'Review'
-  }
+  }]
 });
 
 var CommentModel = mongoose.model('Comment', CommentSchema);

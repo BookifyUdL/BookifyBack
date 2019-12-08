@@ -32,6 +32,7 @@ exports.create_review = (req, res, next) => {
 exports.get_all_review = (req, res, next) => {
     Review
     .find()//Without parameters it will get all the options.
+    .populate('feeling')
     .exec()
     .then(results => {
         if(results.length >= 0){
@@ -67,6 +68,7 @@ exports.get_all_review = (req, res, next) => {
 exports.get_review = (req, res, next) => {
     const reviewId = req.params.reviewId;//params--> object with all the params we have.
     Review.findById(reviewId)
+    .populate('feeling')
     .exec()
     .then(doc => {
         console.log("From Database: " + doc);

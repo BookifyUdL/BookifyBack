@@ -32,6 +32,11 @@ exports.update_user = (req, res, next) => {
 exports.get_user = (req, res, next) => {
     const userId = req.params.userId;//params--> object with all the params we have.
     User.findById(userId)
+        .populate('achievements')
+        .populate('genres')
+        .populate('read_book')
+        .populate('interested_book')
+        .populate('library')
         .exec()
         .then(doc => {
             console.log("From Database: " + doc);

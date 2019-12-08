@@ -19,10 +19,10 @@ exports.create_comment = (req, res, next) => {
         res.status(201).json({
             message: "Comment created successfully",
             createdComment: {
-                _id: result._id,
-                message: result.message,
+                _id: req.body._id,
+                message: req.body.message,
                 //book: result.book,
-                user: result.user,
+                user: req.body.user,
                 user_liked: req.body.user_liked,
                 uri: req.body.uri,
                 comment_type: req.body.comment_type,
@@ -41,20 +41,24 @@ exports.create_comment = (req, res, next) => {
 exports.get_all_comment = (req, res, next) => {
     Comment
     .find()//Without parameters it will get all the options.
+    .populate('user')
+    .populate('user_liked')
+    .populate('subreviews')
     .exec()
-    .then(results => {
+    .then(result => {
         if(results.length >= 0){
             const response = {
                 count: results.length,
                 comments: results.map( result => {
                     return {
                         _id: result._id,
-                        comment: result.message,
-                        commentType: result.comment_type,
-                        url: result.uri,
+                        message: result.message,
                         //book: result.book,
                         user: result.user,
-                        userLiked: result.user_liked,
+                        user_liked: result.user_liked,
+                        uri: result.uri,
+                        comment_type: result.comment_type,
+                        subreviews: result.subreviews,
                         //extra information, about how to do a get.
                         request: {
                             type: 'GET',
@@ -80,6 +84,9 @@ exports.get_all_comment = (req, res, next) => {
 exports.get_comment = (req, res, next) => {
     const commentId = req.params.commentId;//params--> object with all the params we have.
     Comment.findById(commentId)
+    .populate('user')
+    .populate('user_liked')
+    .populate('subreviews')
     .exec()
     .then(doc => {
         console.log("From Database: " + doc);

@@ -34,6 +34,8 @@ exports.create_item = (req, res, next) => {
 exports.get_all_item = (req, res, next) => {
     Item
     .find()//Without parameters it will get all the options.
+    .populate('shop_id')
+    .populate('book_id')
     .exec()
     .then(results => {
         if(results.length >= 0){
@@ -70,6 +72,8 @@ exports.get_all_item = (req, res, next) => {
 exports.get_item = (req, res, next) => {
     const itemId = req.params.itemId;//params--> object with all the params we have.
     Item.findById(itemId)
+    .populate('shop_id')
+    .populate('book_id')
     .exec()
     .then(doc => {
         console.log("From Database: " + doc);
