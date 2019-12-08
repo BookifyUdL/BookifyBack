@@ -18,26 +18,26 @@ const userSchema = mongoose.Schema({
         type: Boolean,
         default: false
     },
-    achievements: {
-        type: [mongoose.Schema.Types.ObjectId],
+    achievements: [{
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'Achievement'
-    },
-    library: {
-        type: [mongoose.Schema.Types.ObjectId],
+    }],
+    library: [{
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'Book'
-    },
-    read_book: {
-        type: [mongoose.Schema.Types.ObjectId],
+    }],
+    read_book: [{
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'Book'
-    },
-    interested_book: {
-        type: [mongoose.Schema.Types.ObjectId],
+    }],
+    interested_book: [{
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'Book'
-    },
-    genres: {
-        type: [mongoose.Schema.Types.ObjectId],
+    }],
+    genres: [{
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'Genre'
-    },
+    }],
     email: { 
         type: String,
         required: true,

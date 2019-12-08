@@ -57,6 +57,11 @@ exports.get_user = (req, res, next) => {
 exports.get_all_users = (req, res, next) => {
     User
         .find()//Without parameters it will get all the options.
+        .populate('achievements')
+        .populate('genres')
+        .populate('read_book')
+        .populate('interested_book')
+        .populate('library')
         .exec()
         .then(results => {
             if(results.length >= 0){
