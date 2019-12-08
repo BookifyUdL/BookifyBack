@@ -53,6 +53,9 @@ exports.create_book = (req, res, next) => {
 exports.get_all_books = (req, res, next) => {
     Book
     .find()//Without parameters it will get all the options.
+    .populate('author')
+    .populate('genre')
+    .populate('comments')
     .exec()
     .then(results => {
         if(results.length >= 0){

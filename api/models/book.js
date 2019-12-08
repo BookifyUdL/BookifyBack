@@ -24,19 +24,19 @@ const BookSchema = mongoose.Schema({
       ref: 'Author',
       required: true
   },
-  genre: {
-    type: [mongoose.Schema.Types.ObjectId], 
+  genre: [{
+    type: mongoose.Schema.Types.ObjectId, 
     ref: 'Genre',
     required: true
-  },
+  }],
   cover_image: {
     type: String,
     required: true
   },
-  comments: {
-    type: [mongoose.Schema.Types.ObjectId],
+  comments: [{
+    type: mongoose.Schema.Types.ObjectId,
     ref: 'Comment'
-  },
+  }],
   rating: {
     type: Number,
     default:0
