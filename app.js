@@ -3,6 +3,10 @@ const app = express();
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
+const cors = require('cors');
+const path = require('path');
+const passport = require('passport');
+require('./api/config/passport');
 
 const userRoutes = require('./api/routes/userRoutes');
 const bookRoutes = require('./api/routes/bookRoutes');
@@ -13,6 +17,7 @@ const genreRoutes = require('./api/routes/genreRoutes');
 const achievementRoutes = require('./api/routes/achievementRoutes');
 const shopRoutes = require('./api/routes/shopRoutes');
 const itemRoutes = require('./api/routes/itemRoutes');
+const adminRoutes = require('./api/routes/adminRoutes');
 
 
 //MongoDB connection PATH
@@ -33,6 +38,10 @@ app.use(morgan('dev'));//extra logs of each petition
 app.use('/uploads', express.static('uploads'))
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(cors());
+
 
 //Before any request is done we have to "disable" CORS
 app.use((req, res, next) => {
@@ -59,6 +68,7 @@ app.use('/comments', commentRoutes);
 app.use('/reviews', reviewRoutes);
 app.use('/shops', shopRoutes);
 app.use('/items', itemRoutes);
+app.use('/admin', adminRoutes);
 
 //Handle all requests errors here, because if I arrive here
 // it means that any request has matched with the other file ones.
@@ -70,6 +80,7 @@ app.use((req, res, next) => {
 
 //Server errors handler
 app.use((error, req, res, next) => {
+    console.log(error);
   res.status(error.status || 500);
   res.json({
       error: {
