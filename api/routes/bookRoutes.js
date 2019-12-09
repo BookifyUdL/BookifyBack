@@ -10,11 +10,13 @@ router.post('/', BookController.create_book);
 
 router.get('/', BookController.get_all_books);
 
-router.get('/:bookId', BookController.get_book);
+router.get('/:bookId', BookController.get_book_by_Id);
 
-router.get('/:bookTitle', BookController.get_book_by_title);
+router.get('/title/:bookTitle', BookController.get_book_by_title);
 
-router.get('/:bookGenre', BookController.get_book_by_genre);
+router.get('/genre/:bookGenre', BookController.get_book_by_genre);
+
+router.get('/new/:bookIsNew', BookController.get_book_by_newness);
 
 router.patch('/:bookId', BookController.update_book);
 
