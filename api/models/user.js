@@ -30,6 +30,10 @@ const userSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Book'
     }],
+    reading_book: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Book'
+    }],
     interested_book: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Book'

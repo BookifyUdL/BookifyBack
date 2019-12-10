@@ -31,6 +31,7 @@ exports.create_item = (req, res, next) => {
     })
     .catch(err => console.log(err));
 }
+
 exports.get_all_item = (req, res, next) => {
     Item
     .find()//Without parameters it will get all the options.
@@ -69,6 +70,7 @@ exports.get_all_item = (req, res, next) => {
         });
     });
 }
+
 exports.get_item = (req, res, next) => {
     const itemId = req.params.itemId;//params--> object with all the params we have.
     Item.findById(itemId)
@@ -95,6 +97,7 @@ exports.get_item = (req, res, next) => {
         res.status(500).json({error:err});
     });
 }
+
 exports.update_item = (req, res, next) => {
     const id = req.params.itemId;
     const updateOps = {};
@@ -118,6 +121,7 @@ exports.update_item = (req, res, next) => {
             });
         });
 }
+
 exports.delete_item = (req, res, next) => {
     const id = req.params.itemId;
     Item.remove({_id: id})

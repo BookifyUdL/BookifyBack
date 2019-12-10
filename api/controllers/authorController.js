@@ -62,7 +62,7 @@ exports.get_all_author = (req, res, next) => {
     });
 }
 
-exports.get_author_by_name = (req, res, next) => {
+/*exports.get_author_by_name = (req, res, next) => {
     const name = req.params.name;//params--> object with all the params we have.
     Author.find({"name": name})
     .exec()
@@ -85,7 +85,7 @@ exports.get_author_by_name = (req, res, next) => {
         console.log(err)
         res.status(500).json({error:err});
     });
-}
+}*/
 
 exports.get_author = (req, res, next) => {
     const authorId = req.params.authorId;//params--> object with all the params we have.

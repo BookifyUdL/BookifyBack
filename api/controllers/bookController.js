@@ -49,7 +49,6 @@ exports.create_book = (req, res, next) => {
     .catch(err => console.log(err));
 }
 
-
 exports.get_all_books = (req, res, next) => {
     Book
     .find()//Without parameters it will get all the options.
@@ -98,7 +97,207 @@ exports.get_all_books = (req, res, next) => {
     });
 }
 
-exports.get_book = (req, res, next) => {
+exports.get_book_by_newness = (req, res, next) => {
+    const newness = req.params.bookIsNew;
+    console.log(req.params);
+    Book
+        .find({ "is_new": newness })
+        .populate('author')
+        .populate('genre')
+        .populate('comments')
+        .exec()
+        .then(doc => {
+            console.log("Newness" + doc);
+            if(doc){
+                res.status(200).json({
+                    book: doc,
+                    request: {
+                        type: 'GET',
+                        description: "GET_ALL_BOOKS",
+                        url: 'http://localhost:3000/books/'
+                    }
+                });
+            } else {
+                res.status(404).json({message: "No result found, for the id you've searched"})
+            }
+        })
+        .catch(err => {
+            console.log(err)
+            res.status(500).json({error:err});
+        });
+}
+
+exports.get_genre_top_books = (req, res, next) => {
+    const genreId = req.params.genreId;//params--> object with all the params we have.
+    Book.find({"genre": genreId})
+    .limit(10)
+    .sort('-rating')
+    .populate('author')
+    .populate('genre')
+    .populate('comments')
+    .exec()
+    .then(doc => {
+        console.log("From Database: " + doc);
+        if(doc){
+            res.status(200).json({
+                book: doc,
+                request: {
+                    type: 'GET',
+                    description: "GET_ALL_BOOKS",
+                    url: 'http://localhost:3000/books/'
+                }
+            });
+        } else {
+            res.status(404).json({message: "No result found, for the id you've searched"})
+        }
+    })
+    .catch(err => {
+        console.log(err)
+        res.status(500).json({error:err});
+    });
+}
+
+exports.get_toprated_books = (req, res, next) => {
+    const genreId = req.params.genreId;//params--> object with all the params we have.
+    Book.find()
+    .limit(10)
+    .sort('-rating')
+    .populate('author')
+    .populate('genre')
+    .populate('comments')
+    .exec()
+    .then(doc => {
+        console.log("From Database: " + doc);
+        if(doc){
+            res.status(200).json({
+                book: doc,
+                request: {
+                    type: 'GET',
+                    description: "GET_ALL_BOOKS",
+                    url: 'http://localhost:3000/books/'
+                }
+            });
+        } else {
+            res.status(404).json({message: "No result found, for the id you've searched"})
+        }
+    })
+    .catch(err => {
+        console.log(err)
+        res.status(500).json({error:err});
+    });
+}
+
+exports.get_book_comments = (req, res, next) => {
+    const bookId = req.params.bookId;//params--> object with all the params we have.
+    Book.findById(bookId)
+    .select('_id comments')
+    .populate('comments')
+    .exec()
+    .then(doc => {
+        console.log("From Database: " + doc);
+        if(doc){
+            res.status(200).json({
+                book: doc,
+                request: {
+                    type: 'GET',
+                    description: "GET_ALL_BOOKS",
+                    url: 'http://localhost:3000/books/'
+                }
+            });
+        } else {
+            res.status(404).json({message: "No result found, for the id you've searched"})
+        }
+    })
+    .catch(err => {
+        console.log(err)
+        res.status(500).json({error:err});
+    });
+}
+
+exports.get_book_rate = (req, res, next) => {
+    const bookId = req.params.bookId;//params--> object with all the params we have.
+    Book.findById(bookId)
+    .select('_id rating num_rating')
+    .exec()
+    .then(doc => {
+        console.log("From Database: " + doc);
+        if(doc){
+            res.status(200).json({
+                book: doc,
+                request: {
+                    type: 'GET',
+                    description: "GET_ALL_BOOKS",
+                    url: 'http://localhost:3000/books/'
+                }
+            });
+        } else {
+            res.status(404).json({message: "No result found, for the id you've searched"})
+        }
+    })
+    .catch(err => {
+        console.log(err)
+        res.status(500).json({error:err});
+    });
+}
+
+exports.get_book_by_title = (req, res, next) => {
+    const title = req.params.bookTitle;//params--> object with all the params we have.
+    console.log(title);
+    Book.find({"title": title})
+    .populate('author')
+    .populate('genre')
+    .populate('comments')
+    .exec()
+    .then(doc => {
+        console.log("From Database: " + doc);
+        if(doc){
+            res.status(200).json({
+                book: doc,
+                request: {
+                    type: 'GET',
+                    description: "GET_ALL_BOOKS",
+                    url: 'http://localhost:3000/books/'
+                }
+            });
+        } else {
+            res.status(404).json({message: "No result found, for the title you've searched"})
+        }
+    })
+    .catch(err => {
+        console.log(err)
+        res.status(500).json({error:err});
+    });
+}
+
+exports.get_book_by_genre = (req, res, next) => {
+    const genre = req.params.bookGenre[0];//params--> object with all the params we have.
+    Book.find({"genre": genre})
+    .populate('author')
+    .populate('genre')
+    .populate('comments')
+    .exec()
+    .then(doc => {
+        console.log("From Database: " + doc);
+        if(doc){
+            res.status(200).json({
+                book: doc,
+                request: {
+                    type: 'GET',
+                    description: "GET_ALL_BOOKS",
+                    url: 'http://localhost:3000/books/'
+                }
+            });
+        } else {
+            res.status(404).json({message: "No result found, for the genre you've searched"})
+        }
+    })
+    .catch(err => {
+        console.log(err)
+        res.status(500).json({error:err});
+    });
+}
+
+exports.get_book_by_Id = (req, res, next) => {
     const bookId = req.params.bookId;//params--> object with all the params we have.
     Book.findById(bookId)
     .populate('author')
@@ -126,62 +325,6 @@ exports.get_book = (req, res, next) => {
     });
 }
 
-exports.get_book_by_title = (req, res, next) => {
-    const title = req.params.bookTitle;//params--> object with all the params we have.
-    Book.find({"title": title})
-    .populate('author')
-    .populate('genre')
-    .populate('comments')
-    .exec()
-    .then(doc => {
-        console.log("From Database: " + doc);
-        if(doc){
-            res.status(200).json({
-                book: doc,
-                request: {
-                    type: 'GET',
-                    description: "GET_ALL_BOOKS",
-                    url: 'http://localhost:3000/books/'
-                }
-            });
-        } else {
-            res.status(404).json({message: "No result found, for the id you've searched"})
-        }
-    })
-    .catch(err => {
-        console.log(err)
-        res.status(500).json({error:err});
-    });
-}
-
-
-exports.get_book_by_genre = (req, res, next) => {
-    const genre = req.params.bookGenre[0];//params--> object with all the params we have.
-    Book.find({"genre": genre})
-    .populate('author')
-    .populate('genre')
-    .populate('comments')
-    .exec()
-    .then(doc => {
-        console.log("From Database: " + doc);
-        if(doc){
-            res.status(200).json({
-                book: doc,
-                request: {
-                    type: 'GET',
-                    description: "GET_ALL_BOOKS",
-                    url: 'http://localhost:3000/books/'
-                }
-            });
-        } else {
-            res.status(404).json({message: "No result found, for the id you've searched"})
-        }
-    })
-    .catch(err => {
-        console.log(err)
-        res.status(500).json({error:err});
-    });
-}
 exports.update_book = (req, res, next) => {
     const id = req.params.bookId;
     const updateOps = {};

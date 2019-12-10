@@ -38,6 +38,26 @@ exports.create_comment = (req, res, next) => {
     .catch(err => console.log(err));
 }
 
+exports.create_subcomment = (req, res, next) => {
+    console.log(req.file);
+    const commentId = req.params.commentId;
+    const subcomment = new Comment({
+        _id: mongoose.Types.ObjectId(),
+        message: req.body.message,
+        //book: req.body.book,
+        user: req.body.user,
+        user_liked: req.body.user_liked,
+        uri: req.body.uri,
+        comment_type: req.body.comment_type,
+        subreviews: req.body.subreviews
+    });
+    subcomment.save()
+    .then( result => {
+        res.send(result);
+    })
+    .catch(err => console.log(err));
+}
+
 exports.get_all_comment = (req, res, next) => {
     Comment
     .find()//Without parameters it will get all the options.
@@ -45,7 +65,7 @@ exports.get_all_comment = (req, res, next) => {
     .populate('user_liked')
     .populate('subreviews')
     .exec()
-    .then(result => {
+    .then(results => {
         if(results.length >= 0){
             const response = {
                 count: results.length,
@@ -65,7 +85,7 @@ exports.get_all_comment = (req, res, next) => {
                             url: 'http://localhost:3000/comments/' + result._id
                         }
                     }
-                })//map --> map it into a new array.
+                })
             }
             res.status(200).json(response);
         } else {

@@ -2,11 +2,11 @@ const mongoose = require('mongoose');
 
 const ItemSchema = mongoose.Schema({
   _id: mongoose.Schema.Types.ObjectId,
-  shop_id: {
+  shop_id: [{
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Shop',
       required: true
-  },
+  }],
   book_id: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Book',

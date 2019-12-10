@@ -8,13 +8,23 @@ const BookController = require('../controllers/bookController');
 //Create user
 router.post('/', BookController.create_book);
 
+router.get('/title/:bookTitle', BookController.get_book_by_title);
+
+router.get('/genre/:bookGenre', BookController.get_book_by_genre);
+
+router.get('/new/:bookIsNew', BookController.get_book_by_newness);
+
+router.get('/genres/:genreId', BookController.get_genre_top_books);
+
+router.get('/:bookId/comments', BookController.get_book_comments);
+
+router.get('/:bookId/rate', BookController.get_book_rate);
+
+router.get('/toprated', BookController.get_toprated_books);
+
+router.get('/:bookId', BookController.get_book_by_Id);
+
 router.get('/', BookController.get_all_books);
-
-router.get('/:bookId', BookController.get_book);
-
-router.get('/:bookTitle', BookController.get_book_by_title);
-
-router.get('/:bookGenre', BookController.get_book_by_genre);
 
 router.patch('/:bookId', BookController.update_book);
 
