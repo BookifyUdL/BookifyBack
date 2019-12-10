@@ -137,7 +137,7 @@ exports.user_signup = (req, res, next) => {
                             achievements: req.body.achievements,
                             library: req.body.library,
                             read_book: req.body.read_book,
-                            reading_book: req.body.reading,_book,
+                            reading_book: req.body.reading_book,
                             interested_book: req.body.interested_book,
                             genres: req.body.genres,
                             email: req.body.email,
