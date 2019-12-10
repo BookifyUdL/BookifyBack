@@ -26,7 +26,6 @@ router.get('/:bookId', BookController.get_book_by_Id);
 
 router.get('/', BookController.get_all_books);
 
-
 router.patch('/:bookId', BookController.update_book);
 
 router.delete('/:bookId', BookController.delete_book);

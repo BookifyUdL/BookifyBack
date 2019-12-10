@@ -35,6 +35,7 @@ exports.get_user = (req, res, next) => {
         .populate('achievements')
         .populate('genres')
         .populate('read_book')
+        .populate('reading_book')
         .populate('interested_book')
         .populate('library')
         .exec()
@@ -65,6 +66,7 @@ exports.get_all_users = (req, res, next) => {
         .populate('achievements')
         .populate('genres')
         .populate('read_book')
+        .populate('reading_book')
         .populate('interested_book')
         .populate('library')
         .exec()
@@ -82,6 +84,7 @@ exports.get_all_users = (req, res, next) => {
                             achievements: result.achievements,
                             library: result.library,
                             read_book: result.read_book,
+                            reading_book: result.reading_book,
                             interested_book: result.interested_book,
                             genres: result.genres,
                             email: result.email,
@@ -133,7 +136,8 @@ exports.user_signup = (req, res, next) => {
                             premium: req.body.premium,
                             achievements: req.body.achievements,
                             library: req.body.library,
-                            read_book: req.body.read,
+                            read_book: req.body.read_book,
+                            reading_book: req.body.reading,_book,
                             interested_book: req.body.interested_book,
                             genres: req.body.genres,
                             email: req.body.email,
