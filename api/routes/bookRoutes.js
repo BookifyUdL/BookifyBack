@@ -8,6 +8,8 @@ const BookController = require('../controllers/bookController');
 //Create user
 router.post('/', BookController.create_book);
 
+router.get('/author/:authorId', BookController.get_book_by_author);
+
 router.get('/title/:bookTitle', BookController.get_book_by_title);
 
 router.get('/genre/:bookGenre', BookController.get_book_by_genre);
