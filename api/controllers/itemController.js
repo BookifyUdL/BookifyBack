@@ -32,6 +32,34 @@ exports.create_item = (req, res, next) => {
     .catch(err => console.log(err));
 }
 
+exports.get_book_shops = (req, res, next) => {
+    const bookId = req.params.bookId;
+    Item.
+    find({book_id: bookId})
+    .populate('shop_id')
+    .populate('book_id')
+    .exec()
+    .then(doc => {
+        console.log("From Database: " + doc);
+        if(doc){
+            res.status(200).json({
+                item: doc,
+                request: {
+                    type: 'GET',
+                    description: "GET_ALL_ITEMS",
+                    url: 'http://localhost:3000/items/'
+                }
+            });
+        } else {
+            res.status(404).json({message: "No result found, for the book_id you've searched"})
+        }
+    })
+    .catch(err => {
+        console.log(err)
+        res.status(500).json({error:err});
+    });
+}
+
 exports.get_all_item = (req, res, next) => {
     Item
     .find()//Without parameters it will get all the options.
