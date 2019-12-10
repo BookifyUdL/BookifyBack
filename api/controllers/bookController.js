@@ -299,8 +299,8 @@ exports.get_book_by_title = (req, res, next) => {
 }
 
 exports.get_book_by_genre = (req, res, next) => {
-    const genre = req.params.bookGenre[0];//params--> object with all the params we have.
-    Book.find({"genre": genre})
+    const genreId = req.params.genreId;//params--> object with all the params we have.
+    Book.find({"genre": genreId})
     .populate('author')
     .populate('genre')
     .populate('comments')
