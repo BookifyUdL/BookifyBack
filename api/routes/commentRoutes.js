@@ -6,8 +6,6 @@ const checkAuth = require('../middleware/checkAuth');
 const CommentController = require('../controllers/commentController');
 
 //Create user
-router.post('/:commentId', CommentController.create_subcomment);
-
 router.post('/', CommentController.create_comment);
 
 router.get('/:commentId', CommentController.get_comment);

@@ -10,6 +10,8 @@ router.post('/signup', UserController.user_signup);
 
 router.post('/', UserController.user_signup);
 
+router.get('/:email', UserController.get_user_by_email);
+
 router.get('/', UserController.get_all_users);
 
 router.get('/:userId', UserController.get_user);

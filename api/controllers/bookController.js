@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 const Book = require('../models/book.js');
 
-
 exports.create_book = (req, res, next) => {
     console.log(req.file);
     const book = new Book({
@@ -97,6 +96,37 @@ exports.get_all_books = (req, res, next) => {
     });
 }
 
+exports.get_book_by_author = (req, res, next) => {
+    const authorId = req.params.authorId;
+    console.log(req.params);
+    Book
+        .find({ "author": authorId })
+        .populate('author')
+        .populate('genre')
+        .populate('comments')
+        .exec()
+        .then(doc => {
+            console.log("Author" + doc);
+            if(doc){
+                res.status(200).json({
+                    book: doc,
+                    request: {
+                        type: 'GET',
+                        description: "GET_ALL_BOOKS",
+                        url: 'http://localhost:3000/books/'
+                    }
+                });
+            } else {
+                res.status(404).json({message: "No result found, for the authorId you've searched"})
+            }
+        })
+        .catch(err => {
+            console.log(err)
+            res.status(500).json({error:err});
+        });
+}
+
+
 exports.get_book_by_newness = (req, res, next) => {
     const newness = req.params.bookIsNew;
     console.log(req.params);
@@ -158,7 +188,6 @@ exports.get_genre_top_books = (req, res, next) => {
 }
 
 exports.get_toprated_books = (req, res, next) => {
-    const genreId = req.params.genreId;//params--> object with all the params we have.
     Book.find()
     .limit(10)
     .sort('-rating')
@@ -270,8 +299,8 @@ exports.get_book_by_title = (req, res, next) => {
 }
 
 exports.get_book_by_genre = (req, res, next) => {
-    const genre = req.params.bookGenre[0];//params--> object with all the params we have.
-    Book.find({"genre": genre})
+    const genreId = req.params.genreId;//params--> object with all the params we have.
+    Book.find({"genre": genreId})
     .populate('author')
     .populate('genre')
     .populate('comments')

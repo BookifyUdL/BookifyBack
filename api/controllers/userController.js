@@ -60,6 +60,38 @@ exports.get_user = (req, res, next) => {
         });
 };
 
+exports.get_user_by_email = (req, res, next) => {
+    const email = req.params.email;//params--> object with all the params we have.
+    User.find({"email": email})
+        .populate('achievements')
+        .populate('genres')
+        .populate('read_book')
+        .populate('reading_book')
+        .populate('interested_book')
+        .populate('library')
+        .exec()
+        .then(doc => {
+            console.log("From Database: " + doc);
+            if(doc){
+                res.status(200).json({
+                    genre: doc,
+                    request: {
+                        type: 'GET',
+                        description: "GET_ALL_USERS",
+                        url: 'http://localhost:3000/users/'
+                    }
+                });
+            } else {
+                res.status(404).json({message: "No result found, for the email you've searched"})
+            }
+        })
+        .catch(err => {
+            console.log(err)
+            res.status(500).json({error:err});
+        });
+};
+
+
 exports.get_all_users = (req, res, next) => {
     User
         .find()//Without parameters it will get all the options.
@@ -141,7 +173,6 @@ exports.user_signup = (req, res, next) => {
                             interested_book: req.body.interested_book,
                             genres: req.body.genres,
                             email: req.body.email,
-                            premium: req.body.premium,
                             //password: hash
                         });
                         user.save()

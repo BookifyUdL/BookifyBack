@@ -6,7 +6,7 @@ const ItemController = require('../controllers/itemController');
 //Create user
 router.post('/', ItemController.create_item);
 
-//router.get('/:bookId', ItemController.get_book_shops);
+router.get('/book/:bookId', ItemController.get_book_shops);
 
 router.get('/:itemId', ItemController.get_item);
 

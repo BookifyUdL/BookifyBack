@@ -38,26 +38,6 @@ exports.create_comment = (req, res, next) => {
     .catch(err => console.log(err));
 }
 
-exports.create_subcomment = (req, res, next) => {
-    console.log(req.file);
-    const commentId = req.params.commentId;
-    const subcomment = new Comment({
-        _id: mongoose.Types.ObjectId(),
-        message: req.body.message,
-        //book: req.body.book,
-        user: req.body.user,
-        user_liked: req.body.user_liked,
-        uri: req.body.uri,
-        comment_type: req.body.comment_type,
-        subreviews: req.body.subreviews
-    });
-    subcomment.save()
-    .then( result => {
-        res.send(result);
-    })
-    .catch(err => console.log(err));
-}
-
 exports.get_all_comment = (req, res, next) => {
     Comment
     .find()//Without parameters it will get all the options.
@@ -132,25 +112,22 @@ exports.get_comment = (req, res, next) => {
 exports.update_comment = (req, res, next) => {
     const id = req.params.commentId;
     const updateOps = {};
-    for(const ops of req.body) {
-        updateOps[ops.propName] = ops.value; //This will give us an updated object.
-    }
-    Genre.update({ _id: id }, {$set: updateOps }) //2nd argument, how we want to update this.
-        .exec()
-        .then( result => {
-            res.status(200).json({
-                message: "Comment information updated",
-                request:{
-                    type: "GET",
-                    url: "http://localhost:3000/comments/" + id
-                }
-            });
-        })
-        .catch( err => {
-            res.status(500).json({
-                error: err
-            });
+    Comment.update({ _id: id }, {$set: updateOps }) //2nd argument, how we want to update this.
+    .exec()
+    .then( result => {
+        res.status(200).json({
+            message: "Comment information updated",
+            request:{
+                type: "GET",
+                url: "http://localhost:3000/comments/" + id
+            }
         });
+    })
+    .catch( err => {
+        res.status(500).json({
+            error: err
+        });
+    });
 }
 
 exports.delete_comment = (req, res, next) => {
