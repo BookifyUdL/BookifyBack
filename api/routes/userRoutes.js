@@ -16,6 +16,8 @@ router.get('/', UserController.get_all_users);
 
 router.get('/:userId', UserController.get_user);
 
+router.patch('/update/:userId', UserController.update_user_mobile);
+
 router.patch('/:userId', UserController.update_user);
 
 router.post('/login', UserController.user_login);

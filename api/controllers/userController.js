@@ -3,7 +3,40 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user.js');
 
-/*TODO modify this controller (_maybe)*/
+exports.update_user_mobile = (req, res, next) => {
+    const id = req.params.userId;
+    User.findByIdAndUpdate(id, 
+        {firebaseId: req.body.firebaseId,
+        name: req.body.name,
+        userPicture: req.body.userPicture,
+        publication_date: req.body.publication_date,
+        premium: req.body.premium,
+        achievements: req.body.achievements,
+        cover_image: req.body.cover_image,
+        library: req.body.library,
+        read_book: req.body.read_book,
+        reading_book: req.body.reading_book,
+        interested_book: req.body.interested_book,
+        genres: req.body.genres,
+        email: req.body.email
+        }, {new: true}) //2nd argument, how we want to update this.
+        .exec()
+        .then( result => {
+            res.status(200).json({
+                message: "User information updated",
+                request:{
+                    type: "GET",
+                    url: "http://localhost:3000/users/" + id
+                }
+            });
+            res.send(result);
+        })
+        .catch( err => {
+            res.status(500).json({
+                error: err
+            });
+        });
+}
 
 exports.update_user = (req, res, next) => {
     const id = req.params.userId;

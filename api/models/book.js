@@ -48,6 +48,10 @@ const BookSchema = mongoose.Schema({
   is_new: {
     type:Boolean,
     default:false
+  },
+  feelings: {
+    type:Object,
+    default: {"angry": 0,"scared": 0, "sad": 0, "confused": 0, "bored": 0, "shocked": 0, "happy": 0, "excited": 0}
   }
 });
 

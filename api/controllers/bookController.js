@@ -16,6 +16,7 @@ exports.create_book = (req, res, next) => {
         rating: req.body.rating,
         num_rating: req.body.num_rating,
         is_new: req.body.is_new,
+        feelings: req.body.feelings,
     });
     book.save()
     .then(result => {
@@ -36,6 +37,7 @@ exports.create_book = (req, res, next) => {
                 rating: result.rating,
                 num_rating: result.num_rating,
                 is_new: result.is_new,
+                feelings:result.feelings,
                 request: {
                     type: 'GET',
                     url: 'http://localhost:3000/books/' + result._id
@@ -74,6 +76,7 @@ exports.get_all_books = (req, res, next) => {
                         rating: result.rating,
                         num_rating: result.num_rating,
                         is_new: result.is_new,
+                        feelings: result.feelings,
                         //extra information, about how to do a get.
                         request: {
                             type: 'GET',
@@ -352,6 +355,40 @@ exports.get_book_by_Id = (req, res, next) => {
         console.log(err)
         res.status(500).json({error:err});
     });
+}
+
+exports.update_book_mobile = (req, res, next) => {
+    const id = req.params.bookId;
+    Book.findByIdAndUpdate(id, 
+        {title: req.body.title,
+        summary: req.body.summary,
+        num_page: req.body.num_page,
+        publication_date: req.body.publication_date,
+        author: req.body.author,
+        genre: req.body.genre,
+        cover_image: req.body.cover_image,
+        comments: req.body.comments,
+        rating: req.body.rating,
+        num_rating: req.body.num_rating,
+        is_new: req.body.is_new,
+        feelings: req.body.feelings
+        }, {new: true}) //2nd argument, how we want to update this.
+        .exec()
+        .then( result => {
+            res.status(200).json({
+                message: "Book information updated",
+                request:{
+                    type: "GET",
+                    url: "http://localhost:3000/books/" + id
+                }
+            });
+            res.send(result);
+        })
+        .catch( err => {
+            res.status(500).json({
+                error: err
+            });
+        });
 }
 
 exports.update_book = (req, res, next) => {
