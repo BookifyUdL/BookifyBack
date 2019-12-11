@@ -212,6 +212,7 @@ exports.user_signup = (req, res, next) => {
                         .then( result => {
                             console.log(result);
                             res.status(201).json({
+                                _id: result._id,
                                 message: "User created correctly"
                             });
                         })
