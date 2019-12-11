@@ -109,6 +109,36 @@ exports.get_comment = (req, res, next) => {
     });
 }
 
+exports.update_comment_mobile = (req, res, next) => {
+    const id = req.params.commentId;
+    Comment.findByIdAndUpdate(id, 
+        {
+            message: req.body.message,
+            user: req.body.user,
+            user_liked: req.body.user_liked,
+            uri: req.body.uri,
+            comment_type: req.body.comment_type,
+            subreviews: req.body.subreviews
+
+        }, {new: true}) //2nd argument, how we want to update this.
+        .exec()
+        .then( result => {
+            res.status(200).json({
+                message: "Genre information updated",
+                request:{
+                    type: "GET",
+                    url: "http://localhost:3000/users/" + id
+                }
+            });
+            res.send(result);
+        })
+        .catch( err => {
+            res.status(500).json({
+                error: err
+            });
+        });
+}
+
 exports.update_comment = (req, res, next) => {
     const id = req.params.commentId;
     const updateOps = {};

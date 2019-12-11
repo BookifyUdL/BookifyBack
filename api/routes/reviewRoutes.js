@@ -11,6 +11,8 @@ router.get('/', ReviewController.get_all_review);
 
 router.get('/:reviewId', ReviewController.get_review);
 
+router.patch('/update/:reviewId', ReviewController.update_review_mobile);
+
 router.patch('/:reviewId', ReviewController.update_review);
 
 router.delete('/:reviewId', ReviewController.delete_review);

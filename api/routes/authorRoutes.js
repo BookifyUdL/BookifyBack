@@ -12,6 +12,8 @@ router.get('/', AuthorController.get_all_author);
 
 router.get('/:authorId', AuthorController.get_author);
 
+router.patch('/update/:authorId', AuthorController.update_author_mobile);
+
 router.patch('/:authorId', AuthorController.update_author);
 
 router.delete('/:authorId', AuthorController.delete_author);

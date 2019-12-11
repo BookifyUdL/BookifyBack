@@ -65,6 +65,33 @@ exports.get_all_review = (req, res, next) => {
         });
     });
 }
+
+exports.update_review_mobile = (req, res, next) => {
+    const id = req.params.reviewId;
+    Review.findByIdAndUpdate(id, 
+        {
+            stars: req.body.stars,
+            feeling: req.body.feeling,
+            user: req.body.user
+        }, {new: true}) //2nd argument, how we want to update this.
+        .exec()
+        .then( result => {
+            res.status(200).json({
+                message: "Review information updated",
+                request:{
+                    type: "GET",
+                    url: "http://localhost:3000/users/" + id
+                }
+            });
+            res.send(result);
+        })
+        .catch( err => {
+            res.status(500).json({
+                error: err
+            });
+        });
+}
+
 exports.get_review = (req, res, next) => {
     const reviewId = req.params.reviewId;//params--> object with all the params we have.
     Review.findById(reviewId)

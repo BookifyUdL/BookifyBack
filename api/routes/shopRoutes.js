@@ -10,6 +10,8 @@ router.get('/', ShopController.get_all_shop);
 
 router.get('/:shopId', ShopController.get_shop);
 
+router.patch('/update/:shopId', ShopController.update_shop_mobile);
+
 router.patch('/:shopId', ShopController.update_shop);
 
 router.delete('/:shopId', ShopController.delete_shop);

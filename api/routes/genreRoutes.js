@@ -12,6 +12,8 @@ router.get('/', GenreController.get_all_genres);
 
 router.get('/:genreId', GenreController.get_genre);
 
+router.patch('/update/:genreId', GenreController.update_genre_mobile);
+
 router.patch('/:genreId', GenreController.update_genre);
 
 router.delete('/:genreId', GenreController.delete_genre);

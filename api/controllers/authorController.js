@@ -111,6 +111,32 @@ exports.get_author = (req, res, next) => {
         res.status(500).json({error:err});
     });
 }
+
+exports.update_author_mobile = (req, res, next) => {
+    const id = req.params.authorId;
+    Author.findByIdAndUpdate(id, 
+        {
+            name: req.body.name
+
+        }, {new: true}) //2nd argument, how we want to update this.
+        .exec()
+        .then( result => {
+            res.status(200).json({
+                message: "Author information updated",
+                request:{
+                    type: "GET",
+                    url: "http://localhost:3000/users/" + id
+                }
+            });
+            res.send(result);
+        })
+        .catch( err => {
+            res.status(500).json({
+                error: err
+            });
+        });
+}
+
 exports.update_author = (req, res, next) => {
     const id = req.params.authorId;
     const updateOps = {};

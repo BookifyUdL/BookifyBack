@@ -12,6 +12,8 @@ router.get('/:commentId', CommentController.get_comment);
 
 router.get('/', CommentController.get_all_comment);
 
+router.patch('/update/:commentId', CommentController.update_comment_mobile);
+
 router.patch('/:commentId', CommentController.update_comment);
 
 router.delete('/:commentId', CommentController.delete_comment);

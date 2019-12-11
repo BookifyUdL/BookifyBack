@@ -12,6 +12,8 @@ router.get('/:itemId', ItemController.get_item);
 
 router.get('/', ItemController.get_all_item);
 
+router.patch('/update/:itemId', ItemController.update_item_mobile);
+
 router.patch('/:itemId', ItemController.update_item);
 
 router.delete('/:itemId', ItemController.delete_item);

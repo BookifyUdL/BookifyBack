@@ -60,6 +60,33 @@ exports.get_book_shops = (req, res, next) => {
     });
 }
 
+exports.update_item_mobile = (req, res, next) => {
+    const id = req.params.itemId;
+    Item.findByIdAndUpdate(id, 
+        {
+            shop_id: req.body.shop_id,
+            book_id: req.body.book_id,
+            price: req.body.price,
+            url: req.body.url
+        }, {new: true}) //2nd argument, how we want to update this.
+        .exec()
+        .then( result => {
+            res.status(200).json({
+                message: "Item information updated",
+                request:{
+                    type: "GET",
+                    url: "http://localhost:3000/users/" + id
+                }
+            });
+            res.send(result);
+        })
+        .catch( err => {
+            res.status(500).json({
+                error: err
+            });
+        });
+}
+
 exports.get_all_item = (req, res, next) => {
     Item
     .find()//Without parameters it will get all the options.

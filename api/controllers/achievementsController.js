@@ -90,6 +90,33 @@ exports.get_achievement = (req, res, next) => {
         res.status(500).json({error:err});
     });
 }
+
+exports.update_achievements_mobile = (req, res, next) => {
+    const id = req.params.achievementId;
+    Achievement.findByIdAndUpdate(id, 
+        {
+            name: req.body.name,
+            points: req.body.points,
+            rank: req.body.rank
+        }, {new: true}) //2nd argument, how we want to update this.
+        .exec()
+        .then( result => {
+            res.status(200).json({
+                message: "Achievement information updated",
+                request:{
+                    type: "GET",
+                    url: "http://localhost:3000/users/" + id
+                }
+            });
+            res.send(result);
+        })
+        .catch( err => {
+            res.status(500).json({
+                error: err
+            });
+        });
+}
+
 exports.update_achievement = (req, res, next) => {
     const id = req.params.achievementId;
     const updateOps = {};
