@@ -91,7 +91,7 @@ exports.get_achievement = (req, res, next) => {
     });
 }
 
-exports.update_achievements_mobile = (req, res, next) => {
+exports.update_achievement_mobile = (req, res, next) => {
     const id = req.params.achievementId;
     Achievement.findByIdAndUpdate(id, 
         {
