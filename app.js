@@ -18,6 +18,8 @@ const achievementRoutes = require('./api/routes/achievementRoutes');
 const shopRoutes = require('./api/routes/shopRoutes');
 const itemRoutes = require('./api/routes/itemRoutes');
 const adminRoutes = require('./api/routes/adminRoutes');
+const statisticsRoutes = require('./api/routes/statisticsRoutes');
+
 
 
 //MongoDB connection PATH
@@ -69,6 +71,7 @@ app.use('/reviews', reviewRoutes);
 app.use('/shops', shopRoutes);
 app.use('/items', itemRoutes);
 app.use('/admin', adminRoutes);
+app.use('/statistics', statisticsRoutes);
 
 //Handle all requests errors here, because if I arrive here
 // it means that any request has matched with the other file ones.
