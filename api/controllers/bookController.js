@@ -27,7 +27,6 @@ exports.create_book = (req, res, next) => {
                 _id: result._id,
                 title: result.title,
                 summary: result.summary,
-                _id: result._id,
                 num_pages: result.num_pages,
                 publication_date: result.publication_date,
                 author: result.author,
@@ -67,7 +66,7 @@ exports.get_all_books = (req, res, next) => {
                         title: result.title,
                         summary: result.summary,
                         _id: result._id,
-                        num_pages: result.num_pages,
+                        num_pages: result.num_page,
                         publication_date: result.publication_date,
                         author: result.author,
                         genre: result.genre,
@@ -359,7 +358,7 @@ exports.get_book_by_Id = (req, res, next) => {
 
 exports.update_book_mobile = (req, res, next) => {
     const id = req.params.bookId;
-    Book.findByIdAndUpdate(id, 
+    Book.findByIdAndUpdate(id,
         {title: req.body.title,
         summary: req.body.summary,
         num_page: req.body.num_page,
