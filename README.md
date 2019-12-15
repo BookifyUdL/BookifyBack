@@ -26,14 +26,17 @@ Global End Point: https://localhost:3000/
 Entities End Points: 
 ```
 {
-  "Books": "https://localhost:3000/books",
-  "Authors": "https://localhost:3000/authors",
-  "Comments": "https://localhost:3000/comment",
-  "Users": "https://localhost:3000/users",
   "Achievements": "https://localhost:3000/achievements",
-  "Shops": "https://localhost:3000/shops",
+  "Admins": "https://localhost:3000/admins",
+  "Authors": "https://localhost:3000/authors",
+  "Books": "https://localhost:3000/books",
+  "Comments": "https://localhost:3000/comment",
   "Genres": "https://localhost:3000/genres",
-  "Items": "https://localhost:3000/items"
+  "Items": "https://localhost:3000/items",
+  "Reviews": "https://localhost:3000/reviews",
+  "Shops": "https://localhost:3000/shops",
+  "Statistics": "https://localhost:3000/statistics",
+  "Users": "https://localhost:3000/users"
 }
 ```
 
