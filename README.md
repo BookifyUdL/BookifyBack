@@ -54,11 +54,11 @@ Body:
 Send GET to the endpoint: https://localhost:3000/genres to get all resources.
 Body: None
 
-Send GET to the endpoint: https://localhost:3000/genres/:id to get a specific resource. (id --> entity id value)
+Send GET to the endpoint: https://localhost:3000/genres/:genreId to get a specific resource. (id --> entity id value)
 Body: None
 
 ### PATCH
-Send PATCH to the endpoint: https://localhost:3000/genres/:id to update/modify a specific resource. (id --> entity id value)
+Send PATCH to the endpoint: https://localhost:3000/genres/:genreId to update/modify a specific resource. (id --> entity id value)
 ```
 [
   {
@@ -69,7 +69,7 @@ Send PATCH to the endpoint: https://localhost:3000/genres/:id to update/modify a
 IMPORTANT: Add as much lines as properties of that entity you want to change.
 
 ### DELETE
-Send DELETE to the endpoint: https://localhost:3000/genres:id to delete a specific resource. (id --> entity id value)
+Send DELETE to the endpoint: https://localhost:3000/genres/:genreId to delete a specific resource. (id --> entity id value)
 Body: None
 
 
