@@ -1,7 +1,7 @@
 # API Documentation
 ## **UML Diagram:**
 
-![Bookify UML](https://github.com/BookifyUdL/BookifyBack/blob/master/UML%20Diagram.png)
+![Bookify UML](https://github.com/BookifyUdL/BookifyBack/blob/master/dbModelDiagramPicture.png)
 
 ## Steps to execute server
 #### 1. Clone the project to your computer(via HTTPS or SSH)
