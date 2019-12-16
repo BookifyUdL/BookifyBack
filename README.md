@@ -68,6 +68,8 @@ Send PATCH to the endpoint: https://localhost:3000/genres/:genreId to update/mod
 ```
 IMPORTANT: Add as much lines as properties of that entity you want to change.
 
+Send PATCH to the endpoint: https://localhost:3000/genres/update/:genreId to update/modify a specific resource, giving values to each property of the entity. (id --> entity id value)
+
 ### DELETE
 Send DELETE to the endpoint: https://localhost:3000/genres/:genreId to delete a specific resource. (id --> entity id value)
 Body: None
