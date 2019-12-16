@@ -29,6 +29,10 @@ const CommentSchema = mongoose.Schema({
     type: Number,
     required: true
   },
+  is_sub: {
+    type:Boolean,
+    default:false
+  },
   subreviews: [{
     type:mongoose.Schema.Types.ObjectId,
     ref: 'Review'
