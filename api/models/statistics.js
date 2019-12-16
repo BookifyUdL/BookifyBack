@@ -9,7 +9,7 @@ const StatisticsSchema = mongoose.Schema({
     type: Number
   },
   time: {
-      type: String
+      type: Date
   }
 });
 
