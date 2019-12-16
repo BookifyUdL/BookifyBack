@@ -93,7 +93,7 @@ exports.get_statistics_by_id = (req, res, next) => {
 
 exports.update_statistics_increment = (req, res, next) => {
     const id = req.params.statisticsId;//params--> object with all the params we have.
-    Statistics.findByIdAndUpdate(id, 
+    Statistics.findByIdAndUpdate(id,
         {
             $inc: {quantity: 1},
         }, {new: true}) //2nd argument, how we want to update this.
@@ -135,3 +135,84 @@ exports.delete_statistics = (req, res, next) => {
         });
     });
 }
+
+exports.init_statistics = (req, res, next) => {
+
+    Statistics.remove({});
+    var statistics = new Statistics({
+        _id: mongoose.Types.ObjectId(),
+        quantity: 10,
+        type: 1,
+        time: new Date(2019, 10, 3)
+    });
+
+    statistics.save();
+
+    statistics = new Statistics({
+        _id: mongoose.Types.ObjectId(),
+        quantity: 40,
+        type: 1,
+        time: new Date(2019, 10, 4)
+    });
+    statistics.save();
+
+    statistics = new Statistics({
+        _id: mongoose.Types.ObjectId(),
+        quantity: 100,
+        type: 1,
+        time: new Date(2019, 10, 5)
+    });
+    statistics.save();
+
+    statistics = new Statistics({
+        _id: mongoose.Types.ObjectId(),
+        quantity: 10,
+        type: 2,
+        time: new Date(2019, 10, 3)
+    });
+
+    statistics.save();
+
+    statistics = new Statistics({
+        _id: mongoose.Types.ObjectId(),
+        quantity: 40,
+        type: 2,
+        time: new Date(2019, 10, 4)
+    });
+    statistics.save();
+
+    statistics = new Statistics({
+        _id: mongoose.Types.ObjectId(),
+        quantity: 100,
+        type: 2,
+        time: new Date(2019, 10, 5)
+    });
+    statistics.save();
+    res.send();
+};
+
+exports.get_statistics_by_type = (req, res, next) => {
+    const paramType = req.params.type;
+
+    Statistics.find({type: paramType}).sort({time: -1})
+        .exec()
+        .then(doc => {
+            console.log("From Database: " + doc);
+            if(doc){
+                res.status(200).json({
+                    statistics: doc,
+                    request: {
+                        type: 'GET',
+                        description: "GET_ALL_STATISTICS",
+                        url: 'http://localhost:3000/statistics/'
+                    }
+                });
+            } else {
+                res.status(404).json({message: "No result found, for the id you've searched"})
+            }
+        })
+        .catch(err => {
+            console.log(err)
+            res.status(500).json({error:err});
+        });
+};
