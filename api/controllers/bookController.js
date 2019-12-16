@@ -358,6 +358,8 @@ exports.get_book_by_Id = (req, res, next) => {
 
 exports.update_book_mobile = (req, res, next) => {
     const id = req.params.bookId;
+    const feelingsObj = req.body.feelings;
+    
     Book.findByIdAndUpdate(id,
         {title: req.body.title,
         summary: req.body.summary,
@@ -370,8 +372,18 @@ exports.update_book_mobile = (req, res, next) => {
         rating: req.body.rating,
         num_rating: req.body.num_rating,
         is_new: req.body.is_new,
-        feelings: req.body.feelings
-        }, {new: true}) //2nd argument, how we want to update this.
+        feelings: {
+            "angry": feelingsObj.angry,
+            "scared": feelingsObj.scared,
+            "sad": feelingsObj.sad,
+            "confused": feelingsObj.confused,
+            "bored": feelingsObj.bored,
+            "shocked": feelingsObj.shocked,
+            "happy": feelingsObj.happy,
+            "excited": feelingsObj.excited
+        }
+        },
+        {new: true}) //2nd argument, how we want to update this.
         .exec()
         .then( result => {
             res.status(200).json({
@@ -384,9 +396,7 @@ exports.update_book_mobile = (req, res, next) => {
             res.send(result);
         })
         .catch( err => {
-            res.status(500).json({
-                error: err
-            });
+            console.log(err);
         });
 }
 
