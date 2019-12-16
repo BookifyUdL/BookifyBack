@@ -194,7 +194,7 @@ exports.init_statistics = (req, res, next) => {
 exports.get_statistics_by_type = (req, res, next) => {
     const paramType = req.params.type;
 
-    Statistics.find({type: paramType}).sort({time: -1})
+    Statistics.find({type: paramType}).sort({time: 1})
         .exec()
         .then(doc => {
             console.log("From Database: " + doc);
