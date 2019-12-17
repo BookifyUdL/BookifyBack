@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 const Book = require('../models/book.js');
+const Genre = require('../models/genre');
+const admin = require("firebase-admin");
 
 exports.create_book = (req, res, next) => {
     console.log(req.file);
@@ -44,6 +46,26 @@ exports.create_book = (req, res, next) => {
 
             }
         });
+        var payload = {
+            notification: {
+                title: req.body.title,
+                body: "Hey! Have you read " + req.body.title + "? Check it out!"
+            }
+        };
+
+        Genre.findById(req.body.genre)
+            .exec()
+            .then(doc => {
+                console.log(doc);
+                admin.messaging().sendToTopic(doc.name, payload)
+                    .then(function(response) {
+                        console.log("Successfully sent message:", response);
+                        console.log("Notification: ", doc.name);
+                    })
+                    .catch(function(error) {
+                        console.log("Error sending message:", error);
+                    });
+            });
 
     })
     .catch(err => console.log(err));
