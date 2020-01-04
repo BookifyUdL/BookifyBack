@@ -1,7 +1,7 @@
 # API Documentation
 ## **UML Diagram:**
 
-![Bookify UML](https://github.com/BookifyUdL/BookifyBack/blob/master/UML%20Diagram.png)
+![Bookify UML](https://github.com/BookifyUdL/BookifyBack/blob/master/dbModelDiagramPicture.png)
 
 ## Steps to execute server
 #### 1. Clone the project to your computer(via HTTPS or SSH)
@@ -26,14 +26,17 @@ Global End Point: https://localhost:3000/
 Entities End Points: 
 ```
 {
-  "Books": "https://localhost:3000/books",
-  "Authors": "https://localhost:3000/authors",
-  "Comments": "https://localhost:3000/comment",
-  "Users": "https://localhost:3000/users",
   "Achievements": "https://localhost:3000/achievements",
-  "Shops": "https://localhost:3000/shops",
+  "Admins": "https://localhost:3000/admins",
+  "Authors": "https://localhost:3000/authors",
+  "Books": "https://localhost:3000/books",
+  "Comments": "https://localhost:3000/comment",
   "Genres": "https://localhost:3000/genres",
-  "Items": "https://localhost:3000/items"
+  "Items": "https://localhost:3000/items",
+  "Reviews": "https://localhost:3000/reviews",
+  "Shops": "https://localhost:3000/shops",
+  "Statistics": "https://localhost:3000/statistics",
+  "Users": "https://localhost:3000/users"
 }
 ```
 
@@ -51,11 +54,11 @@ Body:
 Send GET to the endpoint: https://localhost:3000/genres to get all resources.
 Body: None
 
-Send GET to the endpoint: https://localhost:3000/genres/:id to get a specific resource. (id --> entity id value)
+Send GET to the endpoint: https://localhost:3000/genres/:genreId to get a specific resource. (id --> entity id value)
 Body: None
 
 ### PATCH
-Send PATCH to the endpoint: https://localhost:3000/genres/:id to update/modify a specific resource. (id --> entity id value)
+Send PATCH to the endpoint: https://localhost:3000/genres/:genreId to update/modify a specific resource. (id --> entity id value)
 ```
 [
   {
@@ -65,8 +68,10 @@ Send PATCH to the endpoint: https://localhost:3000/genres/:id to update/modify a
 ```
 IMPORTANT: Add as much lines as properties of that entity you want to change.
 
+Send PATCH to the endpoint: https://localhost:3000/genres/update/:genreId to update/modify a specific resource, giving values to each property of the entity. (id --> entity id value)
+
 ### DELETE
-Send DELETE to the endpoint: https://localhost:3000/genres:id to delete a specific resource. (id --> entity id value)
+Send DELETE to the endpoint: https://localhost:3000/genres/:genreId to delete a specific resource. (id --> entity id value)
 Body: None
 
 

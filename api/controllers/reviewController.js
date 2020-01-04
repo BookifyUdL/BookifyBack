@@ -32,9 +32,9 @@ exports.create_review = (req, res, next) => {
 exports.get_all_review = (req, res, next) => {
     Review
     .find()//Without parameters it will get all the options.
-    .populate('feeling')
     .exec()
     .then(results => {
+        console.log(results);
         if(results.length >= 0){
             const response = {
                 count: results.length,

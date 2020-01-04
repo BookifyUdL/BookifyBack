@@ -11,7 +11,8 @@ exports.create_comment = (req, res, next) => {
         user_liked: req.body.user_liked,
         uri: req.body.uri,
         comment_type: req.body.comment_type,
-        subreviews: req.body.subreviews
+        subreviews: req.body.subreviews,
+        is_sub: req.body.is_sub,
     });
     comment.save()
     .then(result => {
@@ -40,7 +41,7 @@ exports.create_comment = (req, res, next) => {
 
 exports.get_all_comment = (req, res, next) => {
     Comment
-    .find()//Without parameters it will get all the options.
+    .find({is_sub: false})//Without parameters it will get all the options.
     .populate('user')
     .populate('user_liked')
     .populate('subreviews')
@@ -111,7 +112,7 @@ exports.get_comment = (req, res, next) => {
 
 exports.update_comment_mobile = (req, res, next) => {
     const id = req.params.commentId;
-    Comment.findByIdAndUpdate(id, 
+    Comment.findByIdAndUpdate(id,
         {
             message: req.body.message,
             user: req.body.user,

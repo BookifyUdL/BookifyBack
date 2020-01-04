@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 const Book = require('../models/book.js');
+const Genre = require('../models/genre');
+const admin = require("firebase-admin");
 
 exports.create_book = (req, res, next) => {
     console.log(req.file);
@@ -44,6 +46,26 @@ exports.create_book = (req, res, next) => {
 
             }
         });
+        var payload = {
+            notification: {
+                title: req.body.title,
+                body: "Hey! Have you read " + req.body.title + "? Check it out!"
+            }
+        };
+
+        Genre.findById(req.body.genre)
+            .exec()
+            .then(doc => {
+                console.log(doc);
+                admin.messaging().sendToTopic(doc.name, payload)
+                    .then(function(response) {
+                        console.log("Successfully sent message:", response);
+                        console.log("Notification: ", doc.name);
+                    })
+                    .catch(function(error) {
+                        console.log("Error sending message:", error);
+                    });
+            });
 
     })
     .catch(err => console.log(err));
@@ -358,6 +380,8 @@ exports.get_book_by_Id = (req, res, next) => {
 
 exports.update_book_mobile = (req, res, next) => {
     const id = req.params.bookId;
+    const feelingsObj = req.body.feelings;
+    
     Book.findByIdAndUpdate(id,
         {title: req.body.title,
         summary: req.body.summary,
@@ -370,8 +394,18 @@ exports.update_book_mobile = (req, res, next) => {
         rating: req.body.rating,
         num_rating: req.body.num_rating,
         is_new: req.body.is_new,
-        feelings: req.body.feelings
-        }, {new: true}) //2nd argument, how we want to update this.
+        feelings: {
+            "angry": feelingsObj.angry,
+            "scared": feelingsObj.scared,
+            "sad": feelingsObj.sad,
+            "confused": feelingsObj.confused,
+            "bored": feelingsObj.bored,
+            "shocked": feelingsObj.shocked,
+            "happy": feelingsObj.happy,
+            "excited": feelingsObj.excited
+        }
+        },
+        {new: true}) //2nd argument, how we want to update this.
         .exec()
         .then( result => {
             res.status(200).json({

@@ -124,6 +124,7 @@ exports.get_user_by_email = (req, res, next) => {
 
 
 exports.get_all_users = (req, res, next) => {
+    console.log(req);
     User
         .find()//Without parameters it will get all the options.
         .populate('achievements')

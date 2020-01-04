@@ -19,6 +19,14 @@ const shopRoutes = require('./api/routes/shopRoutes');
 const itemRoutes = require('./api/routes/itemRoutes');
 const adminRoutes = require('./api/routes/adminRoutes');
 const statisticsRoutes = require('./api/routes/statisticsRoutes');
+var admin = require("firebase-admin");
+
+var serviceAccount = require('./bookify-ece77-firebase-adminsdk-no1p2-28fde3a07d.json');
+
+admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount),
+    databaseURL: "https://bookify-ece77.firebaseio.com"
+});
 
 
 
