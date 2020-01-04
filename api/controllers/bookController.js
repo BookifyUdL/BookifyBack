@@ -384,9 +384,7 @@ exports.update_book_mobile = (req, res, next) => {
             res.send(result);
         })
         .catch( err => {
-            res.status(500).json({
-                error: err
-            });
+            console.log(err);
         });
 }
 
